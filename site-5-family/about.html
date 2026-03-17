@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>За нас | Стоянови и Синове</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --brick: #8B2500; --wheat: #F5DEB3; --white: #FFFFFF; --brick-dark: #6B1D00; --text: #3A2A1A; --gray: #7A6A5A; }
+        body { font-family: 'Lato', sans-serif; color: var(--text); line-height: 1.7; background: var(--white); }
+        h1, h2, h3, h4 { font-family: 'Archivo', sans-serif; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(139,37,0,0.95); backdrop-filter: blur(8px); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1200px; margin: 0 auto; }
+        .nav-logo { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--wheat); }
+        .nav-logo span { color: var(--white); font-weight: 400; font-size: 0.85rem; display: block; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--wheat); font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--wheat); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 26px; height: 2px; background: var(--wheat); transition: 0.3s; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; flex-direction: column; background: var(--brick); padding: 20px 24px; gap: 16px; }
+            .nav-links.open { display: flex; }
+        }
+
+        /* PAGE HEADER */
+        .page-header { padding: 160px 0 80px; background: linear-gradient(135deg, var(--brick), var(--brick-dark)); color: var(--white); text-align: center; }
+        .page-header h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 16px; }
+        .page-header p { font-size: 1.15rem; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+
+        .section-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--brick); font-weight: 700; margin-bottom: 12px; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 20px; }
+
+        /* FATHER AND SONS STORY */
+        .story { padding: 100px 0; }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .story-img { border-radius: 12px; overflow: hidden; }
+        .story-img img { width: 100%; height: 500px; object-fit: cover; }
+        .story p { color: var(--gray); font-size: 1.05rem; margin-bottom: 16px; }
+        .story blockquote { border-left: 4px solid var(--brick); padding-left: 20px; margin: 28px 0; font-style: italic; color: var(--brick-dark); font-size: 1.15rem; line-height: 1.6; }
+        @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; gap: 30px; } }
+
+        /* FULL TIMELINE */
+        .timeline-full { padding: 100px 0; background: var(--wheat); }
+        .tl-container { max-width: 800px; margin: 50px auto 0; position: relative; }
+        .tl-container::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 3px; background: var(--brick); }
+        .tl-item { display: flex; align-items: flex-start; margin-bottom: 60px; position: relative; }
+        .tl-item:nth-child(odd) { flex-direction: row-reverse; text-align: right; }
+        .tl-content { width: 45%; padding: 24px; background: var(--white); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .tl-item:nth-child(odd) .tl-content { margin-right: auto; margin-left: 5%; }
+        .tl-item:nth-child(even) .tl-content { margin-left: auto; margin-right: 5%; }
+        .tl-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; background: var(--brick); border: 4px solid var(--wheat); border-radius: 50%; z-index: 2; top: 28px; }
+        .tl-year { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--brick); margin-bottom: 8px; }
+        .tl-title { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+        .tl-text { color: var(--gray); font-size: 0.95rem; }
+        @media (max-width: 768px) {
+            .tl-container::before { left: 20px; }
+            .tl-item, .tl-item:nth-child(odd) { flex-direction: row; text-align: left; }
+            .tl-content, .tl-item:nth-child(odd) .tl-content, .tl-item:nth-child(even) .tl-content { width: calc(100% - 60px); margin-left: 60px !important; margin-right: 0 !important; }
+            .tl-dot { left: 20px; }
+        }
+
+        /* TEAM */
+        .team { padding: 100px 0; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .team-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: 0.3s; }
+        .team-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(139,37,0,0.12); }
+        .team-card img { width: 100%; height: 320px; object-fit: cover; }
+        .team-card-body { padding: 24px; }
+        .team-card h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .team-card .role { color: var(--brick); font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+        .team-card .generation { color: var(--gray); font-size: 0.85rem; font-style: italic; margin-bottom: 10px; }
+        .team-card p { color: var(--gray); font-size: 0.9rem; }
+
+        /* VALUES */
+        .values { padding: 100px 0; background: var(--brick); color: var(--white); }
+        .values .section-label { color: var(--wheat); }
+        .values .section-title { color: var(--white); }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
+        .value-item { text-align: center; padding: 40px 30px; }
+        .value-icon { font-size: 2.5rem; margin-bottom: 20px; color: var(--wheat); }
+        .value-item h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--wheat); }
+        .value-item p { opacity: 0.8; font-size: 0.95rem; }
+
+        /* COMMUNITY */
+        .community { padding: 100px 0; background: var(--wheat); }
+        .comm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .comm-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .comm-card img { width: 100%; height: 200px; object-fit: cover; }
+        .comm-card-body { padding: 24px; }
+        .comm-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+        .comm-card p { color: var(--gray); font-size: 0.9rem; }
+        .comm-card .year { display: inline-block; background: var(--brick); color: var(--wheat); padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px; }
+
+        footer { background: #2A1A0A; color: rgba(255,255,255,0.7); padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand h3 { font-family: 'Archivo', sans-serif; font-size: 1.4rem; color: var(--wheat); margin-bottom: 12px; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.8; }
+        footer h4 { font-family: 'Archivo', sans-serif; color: var(--white); margin-bottom: 16px; font-size: 1rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 8px; }
+        footer ul a { color: rgba(255,255,255,0.6); font-size: 0.9rem; transition: color 0.3s; }
+        footer ul a:hover { color: var(--wheat); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 0.85rem; }
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Стоянови и Синове<span>от 1985 г.</span></a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html" class="active">За нас</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="portfolio.html">Портфолио</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>За нашето семейство</h1>
+            <p>Три поколения строители, обединени от обща любов към занаята и уважение към хората, за които строим.</p>
+        </div>
+    </section>
+
+    <section class="story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-img fade-up">
+                    <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800" alt="Баща и синове">
+                </div>
+                <div class="fade-up">
+                    <div class="section-label">Баща и синове</div>
+                    <div class="section-title">Историята на семейство Стоянови</div>
+                    <p>Всичко започна през 1985 година, когато Стоян Димитров Стоянов &mdash; обикновен зидар от Велико Търново &mdash; реши, че може да строи по-добре от другите. Не защото беше по-умен, а защото влагаше душа във всяка тухла.</p>
+                    <p>Съседите забелязаха. После и техните съседи. Скоро дядо Стоян имаше повече работа, отколкото можеше да свърши сам. Затова повика сина си Георги &mdash; тогава едва завършил строителния техникум.</p>
+                    <p>Днес Георги е сърцето на компанията. Неговите синове &mdash; Стоян-младши и Ивайло &mdash; донесоха ново мислене, нови технологии и същата стара честност. Защото в семейство Стоянови думата тежи повече от подписа.</p>
+                    <blockquote>&bdquo;Дядо ми казваше: ако ти е срам да покажеш работата си на майка си, значи не си я свършил добре. Аз все още се водя по този принцип.&ldquo;<br>&mdash; Георги Стоянов</blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-full">
+        <div class="container">
+            <div style="text-align:center;">
+                <div class="section-label fade-up">Нашият път</div>
+                <div class="section-title fade-up">Четири десетилетия, една мисия</div>
+            </div>
+            <div class="tl-container">
+                <div class="tl-item fade-up">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-year">1985</div>
+                        <div class="tl-title">Дядо Стоян основава фирмата</div>
+                        <div class="tl-text">Стоян Стоянов започва като едноличен зидар, работейки по къщи и огради в района на Велико Търново. Първата година завършва 12 проекта &mdash; всеки един от тях с ръце и сърце.</div>
+                    </div>
+                </div>
+                <div class="tl-item fade-up">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-year">1995</div>
+                        <div class="tl-title">Синът Георги поема управлението</div>
+                        <div class="tl-text">След завършване на строителния техникум, Георги се присъединява към баща си. Заедно регистрират фирма и наемат първите трима работника. Започват по-мащабни проекти &mdash; многофамилни жилища и търговски обекти.</div>
+                    </div>
+                </div>
+                <div class="tl-item fade-up">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-year">2010</div>
+                        <div class="tl-title">Внуците се присъединяват</div>
+                        <div class="tl-text">Стоян-младши (строителен инженер) и Ивайло (архитект) влизат в бизнеса. Те внасят модерни CAD технологии, енергоефективно строителство и дигитално управление на проектите. Екипът нараства до 25 души.</div>
+                    </div>
+                </div>
+                <div class="tl-item fade-up">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-year">2024</div>
+                        <div class="tl-title">Трето поколение, нови хоризонти</div>
+                        <div class="tl-text">С над 800 завършени проекта, Стоянови и Синове е сред най-уважаваните строителни фирми в региона. Работим по проекти в целия Централен Балкан, без да забравяме корените си.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container">
+            <div style="text-align:center;">
+                <div class="section-label fade-up">Нашият екип</div>
+                <div class="section-title fade-up">Три поколения, една цел</div>
+            </div>
+            <div class="team-grid">
+                <div class="team-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=500" alt="Стоян Стоянов">
+                    <div class="team-card-body">
+                        <h3>Стоян Стоянов</h3>
+                        <div class="role">Основател и почетен председател</div>
+                        <div class="generation">Първо поколение</div>
+                        <p>На 78 години все още идва в офиса всеки ден. Неговият опит и мъдрост са безценни за всеки голям проект.</p>
+                    </div>
+                </div>
+                <div class="team-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500" alt="Георги Стоянов">
+                    <div class="team-card-body">
+                        <h3>Георги Стоянов</h3>
+                        <div class="role">Управител</div>
+                        <div class="generation">Второ поколение</div>
+                        <p>С 30 години опит в управлението, Георги е двигателят на компанията. Познава лично всеки работник и всеки клиент.</p>
+                    </div>
+                </div>
+                <div class="team-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500" alt="Стоян Стоянов мл.">
+                    <div class="team-card-body">
+                        <h3>Стоян Стоянов мл.</h3>
+                        <div class="role">Главен инженер</div>
+                        <div class="generation">Трето поколение</div>
+                        <p>Строителен инженер от ВТУ. Специалист по съвременни строителни технологии и енергоефективни решения.</p>
+                    </div>
+                </div>
+                <div class="team-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500" alt="Ивайло Стоянов">
+                    <div class="team-card-body">
+                        <h3>Ивайло Стоянов</h3>
+                        <div class="role">Архитект и дизайнер</div>
+                        <div class="generation">Трето поколение</div>
+                        <p>Магистър по архитектура от УАСГ. Отговаря за проектирането и интериорния дизайн на нашите обекти.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values">
+        <div class="container">
+            <div style="text-align:center;">
+                <div class="section-label fade-up">Нашите ценности</div>
+                <div class="section-title fade-up">Това, в което вярваме</div>
+            </div>
+            <div class="values-grid">
+                <div class="value-item fade-up">
+                    <div class="value-icon">&#9829;</div>
+                    <h3>Честност</h3>
+                    <p>Казваме истината за сроковете, цените и проблемите. Никога не обещаваме нещо, което не можем да изпълним. Нашата дума е нашият договор.</p>
+                </div>
+                <div class="value-item fade-up">
+                    <div class="value-icon">&#9733;</div>
+                    <h3>Качество</h3>
+                    <p>Всяка стена, всеки шев, всеки детайл се проверява двойно. Строим така, сякаш строим за собственото си семейство &mdash; защото понякога наистина го правим.</p>
+                </div>
+                <div class="value-item fade-up">
+                    <div class="value-icon">&#9750;</div>
+                    <h3>Семейство</h3>
+                    <p>Нашите работници не са просто служители &mdash; те са част от семейството. Много от тях работят с нас от повече от 15 години. Грижим се за тях, а те се грижат за качеството.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="community">
+        <div class="container">
+            <div style="text-align:center;">
+                <div class="section-label fade-up">Обществени проекти</div>
+                <div class="section-title fade-up">Връщаме на общността</div>
+            </div>
+            <div class="comm-grid">
+                <div class="comm-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600" alt="Училище">
+                    <div class="comm-card-body">
+                        <span class="year">2019</span>
+                        <h3>Реновация на ОУ &bdquo;Св. Кирил и Методий&ldquo;</h3>
+                        <p>Безвъзмездно обновихме фасадата, подменихме дограмата и облагородихме двора. Над 200 деца учат в по-добра среда.</p>
+                    </div>
+                </div>
+                <div class="comm-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1527576539890-dfa815648363?w=600" alt="Параклис">
+                    <div class="comm-card-body">
+                        <span class="year">2021</span>
+                        <h3>Параклис &bdquo;Св. Георги&ldquo; в Арбанаси</h3>
+                        <p>Доброволческа реставрация на стария параклис. Укрепихме основите, ремонтирахме покрива и възстановихме каменната зидария.</p>
+                    </div>
+                </div>
+                <div class="comm-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1594708767771-a7502209ff51?w=600" alt="Площадка">
+                    <div class="comm-card-body">
+                        <span class="year">2023</span>
+                        <h3>Детска площадка кв. &bdquo;Чолаковци&ldquo;</h3>
+                        <p>Изградихме безопасна детска площадка с модерни съоръжения. Проектът е дарение за децата на квартала.</p>
+                    </div>
+                </div>
+                <div class="comm-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=600" alt="Читалище">
+                    <div class="comm-card-body">
+                        <span class="year">2024</span>
+                        <h3>Ремонт на читалище &bdquo;Надежда&ldquo;</h3>
+                        <p>Цялостна реновация на покрива и залата на читалището &mdash; сърцето на културния живот в нашия квартал.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Стоянови и Синове</h3>
+                    <p>Семеен строителен бизнес, основан през 1985 г. Три поколения майстори, които строят с честност и отдаденост в община Велико Търново.</p>
+                </div>
+                <div>
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Начало</a></li>
+                        <li><a href="about.html">За нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="portfolio.html">Портфолио</a></li>
+                        <li><a href="contact.html">Контакти</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li><a href="services.html">Ново строителство</a></li>
+                        <li><a href="services.html">Ремонти</a></li>
+                        <li><a href="services.html">Реконструкции</a></li>
+                        <li><a href="services.html">Покриви</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Контакти</h4>
+                    <ul>
+                        <li>ул. Хан Аспарух 15</li>
+                        <li>5000 Велико Търново</li>
+                        <li>+359 62 620 345</li>
+                        <li>office@stoyanovsynove.bg</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Стоянови и Синове ЕООД. Всички права запазени.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

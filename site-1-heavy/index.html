@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ТитанСтрой — Строителна компания</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#1C1C1C;--yellow:#F0A500;--light:#F5F5F5;--gray:#333}
+body{font-family:'IBM Plex Sans',sans-serif;color:var(--dark);background:var(--light)}
+h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:1px}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+/* NAV */
+nav{background:var(--dark);padding:15px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:3px solid var(--yellow)}
+nav .container{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#fff}
+.logo span{color:var(--yellow)}
+nav ul{display:flex;list-style:none;gap:25px}
+nav a{color:#ccc;font-weight:500;font-size:.95rem;transition:color .3s}
+nav a:hover,nav a.active{color:var(--yellow)}
+.menu-toggle{display:none;background:none;border:none;color:var(--yellow);font-size:1.5rem;cursor:pointer}
+/* SAFETY STRIPE */
+.safety-stripe{height:8px;background:repeating-linear-gradient(45deg,var(--yellow),var(--yellow) 10px,var(--dark) 10px,var(--dark) 20px)}
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,rgba(28,28,28,.92),rgba(28,28,28,.7)),url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400') center/cover;margin-top:60px;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:var(--light);clip-path:polygon(0 60%,100% 0,100% 100%,0 100%)}
+.crane-silhouette{position:absolute;right:5%;top:10%;width:300px;height:400px;opacity:.1}
+.crane-silhouette svg{width:100%;height:100%;fill:var(--yellow)}
+.hero-content{position:relative;z-index:2;padding:40px 0}
+.hero h1{font-size:4rem;color:#fff;line-height:1.1;margin-bottom:20px}
+.hero h1 span{color:var(--yellow);display:block;font-size:5rem}
+.hero p{color:#ccc;font-size:1.2rem;max-width:550px;margin-bottom:30px;line-height:1.7}
+.btn{display:inline-block;padding:14px 35px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .3s;cursor:pointer;border:none}
+.btn-yellow{background:var(--yellow);color:var(--dark)}.btn-yellow:hover{background:#d4920a;transform:translateY(-2px)}
+.btn-outline{border:2px solid var(--yellow);color:var(--yellow);background:transparent;margin-left:15px}.btn-outline:hover{background:var(--yellow);color:var(--dark)}
+/* COUNTERS */
+.counters{padding:80px 0;background:var(--dark);position:relative;clip-path:polygon(0 0,100% 5%,100% 95%,0 100%)}
+.counters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+.counter-box{padding:30px}
+.counter-num{font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:900;color:var(--yellow);display:block}
+.counter-label{color:#aaa;font-size:.95rem;margin-top:5px}
+.progress-bar{height:4px;background:#333;border-radius:2px;margin-top:15px;overflow:hidden}
+.progress-fill{height:100%;background:var(--yellow);border-radius:2px;width:0;transition:width 2s ease}
+/* SERVICES PREVIEW */
+.services-preview{padding:100px 0}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header h2{font-size:2.8rem;margin-bottom:10px}
+.section-header .line{width:60px;height:4px;background:var(--yellow);margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.service-card{background:#fff;padding:35px;border-bottom:4px solid transparent;transition:all .3s;position:relative;overflow:hidden}
+.service-card:hover{border-bottom-color:var(--yellow);transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.service-card .icon{font-size:2.5rem;margin-bottom:15px}
+.service-card h3{font-size:1.4rem;margin-bottom:10px}
+.service-card p{color:#666;font-size:.9rem;line-height:1.6}
+/* PROJECTS */
+.projects{padding:100px 0;background:var(--dark);clip-path:polygon(0 5%,100% 0,100% 100%,0 95%)}
+.projects .section-header h2{color:#fff}
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.project-card{position:relative;overflow:hidden;height:300px;cursor:pointer}
+.project-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.project-card:hover img{transform:scale(1.1)}
+.project-card .overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,.85));transform:translateY(30px);transition:transform .3s}
+.project-card:hover .overlay{transform:translateY(0)}
+.project-card h4{color:var(--yellow);font-size:1.2rem}
+.project-card p{color:#ccc;font-size:.85rem}
+/* CTA */
+.cta{padding:100px 0;text-align:center;background:linear-gradient(135deg,var(--yellow),#d4920a);clip-path:polygon(0 10%,100% 0,100% 90%,0 100%)}
+.cta h2{font-size:3rem;color:var(--dark);margin-bottom:15px}
+.cta p{color:var(--gray);font-size:1.1rem;margin-bottom:30px}
+.btn-dark{background:var(--dark);color:var(--yellow)}.btn-dark:hover{background:#111}
+/* FOOTER */
+footer{background:var(--dark);color:#aaa;padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-bottom:40px}
+footer h4{color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;margin-bottom:15px;text-transform:uppercase}
+footer p,footer li{font-size:.9rem;line-height:1.8}
+footer ul{list-style:none}
+footer a{color:#aaa;transition:color .3s}footer a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;font-size:.85rem}
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);transition:all .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+  .menu-toggle{display:block}
+  nav ul{display:none;position:absolute;top:100%;left:0;right:0;background:var(--dark);flex-direction:column;padding:20px;gap:15px}
+  nav ul.open{display:flex}
+  .hero h1{font-size:2.5rem}.hero h1 span{font-size:3rem}
+  .counters-grid{grid-template-columns:repeat(2,1fr)}
+  .services-grid,.project-grid,.footer-grid{grid-template-columns:1fr}
+  .counters{clip-path:none}.projects{clip-path:none}.cta{clip-path:none}
+}
+</style>
+</head>
+<body>
+<nav>
+ <div class="container">
+  <a href="index.html" class="logo">ТИТАН<span>СТРОЙ</span></a>
+  <button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</button>
+  <ul>
+   <li><a href="index.html" class="active">Начало</a></li>
+   <li><a href="about.html">За нас</a></li>
+   <li><a href="services.html">Услуги</a></li>
+   <li><a href="portfolio.html">Портфолио</a></li>
+   <li><a href="contact.html">Контакти</a></li>
+  </ul>
+ </div>
+</nav>
+<div class="safety-stripe" style="margin-top:63px"></div>
+
+<section class="hero">
+ <div class="crane-silhouette">
+  <svg viewBox="0 0 200 400"><rect x="95" y="50" width="10" height="350" fill="var(--yellow)"/><rect x="30" y="45" width="140" height="8" fill="var(--yellow)"/><rect x="30" y="45" width="3" height="30" fill="var(--yellow)"/><polygon points="100,0 95,50 105,50" fill="var(--yellow)"/><rect x="160" y="48" width="3" height="25" fill="var(--yellow)"/><line x1="100" y1="0" x2="30" y2="45" stroke="var(--yellow)" stroke-width="2"/><line x1="100" y1="0" x2="170" y2="45" stroke="var(--yellow)" stroke-width="2"/></svg>
+ </div>
+ <div class="container hero-content">
+  <h1>Строим с<span>МОЩ и ТОЧНОСТ</span></h1>
+  <p>18 години опит в жилищно, търговско и промишлено строителство в цяла България. Вашият надежден партньор от фундамента до ключа.</p>
+  <a href="contact.html" class="btn btn-yellow">Поискай оферта</a>
+  <a href="portfolio.html" class="btn btn-outline">Нашите проекти</a>
+ </div>
+</section>
+
+<section class="counters">
+ <div class="container">
+  <div class="counters-grid">
+   <div class="counter-box fade-up">
+    <span class="counter-num" data-target="500">0</span><span class="counter-num">+</span>
+    <div class="counter-label">Завършени обекта</div>
+    <div class="progress-bar"><div class="progress-fill" data-width="95%"></div></div>
+   </div>
+   <div class="counter-box fade-up">
+    <span class="counter-num" data-target="18">0</span>
+    <div class="counter-label">Години опит</div>
+    <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
+   </div>
+   <div class="counter-box fade-up">
+    <span class="counter-num" data-target="45000">0</span><span class="counter-num"> m²</span>
+    <div class="counter-label">Построена площ</div>
+    <div class="progress-bar"><div class="progress-fill" data-width="90%"></div></div>
+   </div>
+   <div class="counter-box fade-up">
+    <span class="counter-num" data-target="120">0</span><span class="counter-num">+</span>
+    <div class="counter-label">Професионалисти</div>
+    <div class="progress-bar"><div class="progress-fill" data-width="75%"></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="services-preview">
+ <div class="container">
+  <div class="section-header fade-up"><h2>Нашите услуги</h2><div class="line"></div></div>
+  <div class="services-grid">
+   <div class="service-card fade-up"><div class="icon">🏗️</div><h3>Ново строителство</h3><p>Жилищни сгради, офис комплекси и промишлени обекти — от проектиране до въвеждане в експлоатация.</p></div>
+   <div class="service-card fade-up"><div class="icon">🔧</div><h3>Ремонти и реконструкции</h3><p>Цялостни ремонти, укрепване на конструкции и модернизация на съществуващи сгради.</p></div>
+   <div class="service-card fade-up"><div class="icon">🏠</div><h3>Покриви</h3><p>Нови покривни конструкции, хидроизолация и ремонт на съществуващи покриви с гаранция.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:40px"><a href="services.html" class="btn btn-yellow">Всички услуги →</a></div>
+ </div>
+</section>
+
+<section class="projects">
+ <div class="container">
+  <div class="section-header fade-up"><h2>Избрани проекти</h2><div class="line"></div></div>
+  <div class="project-grid">
+   <div class="project-card fade-up"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Офис сграда"><div class="overlay"><h4>Бизнес Парк Витоша</h4><p>12,000 m² офис площи</p></div></div>
+   <div class="project-card fade-up"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600" alt="Жилищен комплекс"><div class="overlay"><h4>Резиденция Лозенец</h4><p>Жилищен комплекс, 48 апартамента</p></div></div>
+   <div class="project-card fade-up"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600" alt="Промишлен обект"><div class="overlay"><h4>Логистичен център Пловдив</h4><p>8,500 m² складова площ</p></div></div>
+  </div>
+  <div style="text-align:center;margin-top:40px"><a href="portfolio.html" class="btn btn-yellow">Цялото портфолио →</a></div>
+ </div>
+</section>
+
+<section class="cta">
+ <div class="container">
+  <h2>Готови ли сте да строите?</h2>
+  <p>Свържете се с нас за безплатна консултация и оферта за вашия проект.</p>
+  <a href="contact.html" class="btn btn-dark">Свържете се с нас</a>
+ </div>
+</section>
+
+<footer>
+ <div class="safety-stripe"></div>
+ <div class="container" style="padding-top:40px">
+  <div class="footer-grid">
+   <div><a href="index.html" class="logo" style="font-size:1.5rem">ТИТАН<span style="color:var(--yellow)">СТРОЙ</span></a><p style="margin-top:15px">Надежден строителен партньор от 2008 г. Строим с отговорност и прецизност.</p></div>
+   <div><h4>Навигация</h4><ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul></div>
+   <div><h4>Услуги</h4><ul><li>Ново строителство</li><li>Ремонти</li><li>Реконструкции</li><li>Покриви</li><li>Интериорен дизайн</li></ul></div>
+   <div><h4>Контакти</h4><p>бул. Цариградско шосе 120<br>1113 София, България</p><p style="margin-top:10px">📞 +359 2 987 6543<br>✉ info@titanstroy.bg</p></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 ТитанСтрой. Всички права запазени.</span><span>Лиценз: IV категория строежи</span></div>
+ </div>
+</footer>
+
+<script>
+// Counter animation
+function animateCounters(){document.querySelectorAll('.counter-num[data-target]').forEach(c=>{const t=+c.dataset.target;const d=t>1000?50:80;let n=0;const step=Math.ceil(t/60);const timer=setInterval(()=>{n+=step;if(n>=t){n=t;clearInterval(timer)}c.textContent=n.toLocaleString('bg-BG')},d)})}
+// Progress bars
+function animateProgress(){document.querySelectorAll('.progress-fill[data-width]').forEach(b=>{b.style.width=b.dataset.width})}
+// Scroll animations
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');if(e.target.closest('.counters')){animateCounters();animateProgress()}}})},{threshold:.2});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

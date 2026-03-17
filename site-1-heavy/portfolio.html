@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Портфолио — ТитанСтрой</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#1C1C1C;--yellow:#F0A500;--light:#F5F5F5}
+body{font-family:'IBM Plex Sans',sans-serif;color:var(--dark);background:var(--light)}
+h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:1px}
+a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;padding:0 20px}
+nav{background:var(--dark);padding:15px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:3px solid var(--yellow)}
+nav .container{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#fff}.logo span{color:var(--yellow)}
+nav ul{display:flex;list-style:none;gap:25px}nav a{color:#ccc;font-weight:500;font-size:.95rem;transition:color .3s}nav a:hover,nav a.active{color:var(--yellow)}
+.menu-toggle{display:none;background:none;border:none;color:var(--yellow);font-size:1.5rem;cursor:pointer}
+.safety-stripe{height:8px;background:repeating-linear-gradient(45deg,var(--yellow),var(--yellow) 10px,var(--dark) 10px,var(--dark) 20px)}
+.page-hero{margin-top:63px;padding:100px 0 60px;background:linear-gradient(135deg,rgba(28,28,28,.9),rgba(28,28,28,.7)),url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400') center/cover;text-align:center;clip-path:polygon(0 0,100% 0,100% 90%,0 100%)}
+.page-hero h1{font-size:3.5rem;color:#fff;margin-bottom:10px}.page-hero p{color:var(--yellow);font-size:1.1rem}
+/* FILTERS */
+.filters{padding:40px 0;text-align:center}
+.filter-btn{display:inline-block;padding:10px 25px;margin:5px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:600;text-transform:uppercase;background:transparent;border:2px solid #ccc;color:#666;cursor:pointer;transition:all .3s}
+.filter-btn.active,.filter-btn:hover{border-color:var(--yellow);background:var(--yellow);color:var(--dark)}
+/* PORTFOLIO GRID */
+.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;padding-bottom:80px}
+.project-item{position:relative;overflow:hidden;height:350px;transition:all .4s}
+.project-item.hidden{display:none}
+.project-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.project-item:hover img{transform:scale(1.08)}
+.project-info{position:absolute;bottom:0;left:0;right:0;padding:25px;background:linear-gradient(transparent,rgba(28,28,28,.95));transform:translateY(20px);transition:transform .3s}
+.project-item:hover .project-info{transform:translateY(0)}
+.project-info .cat{display:inline-block;background:var(--yellow);color:var(--dark);padding:3px 12px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.project-info h3{color:#fff;font-size:1.3rem;margin-bottom:5px}
+.project-info p{color:#bbb;font-size:.85rem}
+.project-info .details{color:#aaa;font-size:.8rem;margin-top:8px;display:flex;gap:15px}
+/* CTA */
+.cta{padding:80px 0;text-align:center;background:var(--dark)}
+.cta h2{color:#fff;font-size:2.5rem;margin-bottom:15px}
+.cta p{color:#aaa;margin-bottom:25px}
+.btn{display:inline-block;padding:14px 35px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .3s;border:none;cursor:pointer}
+.btn-yellow{background:var(--yellow);color:var(--dark)}.btn-yellow:hover{background:#d4920a}
+footer{background:var(--dark);color:#aaa;padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-bottom:40px}
+footer h4{color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;margin-bottom:15px;text-transform:uppercase}
+footer p,footer li{font-size:.9rem;line-height:1.8}footer ul{list-style:none}footer a{color:#aaa;transition:color .3s}footer a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;font-size:.85rem}
+.fade-up{opacity:0;transform:translateY(30px);transition:all .6s ease}.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+  .menu-toggle{display:block}nav ul{display:none;position:absolute;top:100%;left:0;right:0;background:var(--dark);flex-direction:column;padding:20px;gap:15px}nav ul.open{display:flex}
+  .portfolio-grid,.footer-grid{grid-template-columns:1fr}.page-hero h1{font-size:2.5rem}
+}
+</style>
+</head>
+<body>
+<nav><div class="container"><a href="index.html" class="logo">ТИТАН<span>СТРОЙ</span></a><button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</button><ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html" class="active">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul></div></nav>
+<div class="safety-stripe" style="margin-top:63px"></div>
+
+<section class="page-hero"><h1>Нашето портфолио</h1><p>500+ завършени обекта в цяла България</p></section>
+
+<section class="filters">
+ <div class="container">
+  <button class="filter-btn active" data-filter="all">Всички</button>
+  <button class="filter-btn" data-filter="residential">Жилищни</button>
+  <button class="filter-btn" data-filter="commercial">Търговски</button>
+  <button class="filter-btn" data-filter="industrial">Промишлени</button>
+  <button class="filter-btn" data-filter="renovation">Реконструкции</button>
+ </div>
+</section>
+
+<section class="container">
+ <div class="portfolio-grid">
+  <div class="project-item fade-up" data-cat="commercial">
+   <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Бизнес Парк Витоша">
+   <div class="project-info"><span class="cat">Търговски</span><h3>Бизнес Парк Витоша</h3><p>Модерен офис комплекс с 5 сгради</p><div class="details"><span>📐 12,000 m²</span><span>📅 2024</span><span>📍 София</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="residential">
+   <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600" alt="Резиденция Лозенец">
+   <div class="project-info"><span class="cat">Жилищен</span><h3>Резиденция Лозенец</h3><p>Луксозен жилищен комплекс с 48 апартамента</p><div class="details"><span>📐 6,200 m²</span><span>📅 2023</span><span>📍 София</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="industrial">
+   <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600" alt="Логистичен център">
+   <div class="project-info"><span class="cat">Промишлен</span><h3>Логистичен център Тракия</h3><p>Модерен складов комплекс с офисна част</p><div class="details"><span>📐 8,500 m²</span><span>📅 2023</span><span>📍 Пловдив</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="residential">
+   <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Вила Бояна">
+   <div class="project-info"><span class="cat">Жилищен</span><h3>Вила Бояна</h3><p>Еднофамилна луксозна къща с басейн</p><div class="details"><span>📐 420 m²</span><span>📅 2024</span><span>📍 София</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="renovation">
+   <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Хотел Централ">
+   <div class="project-info"><span class="cat">Реконструкция</span><h3>Хотел Централ</h3><p>Пълна реконструкция на исторически хотел</p><div class="details"><span>📐 3,800 m²</span><span>📅 2022</span><span>📍 Велико Търново</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="commercial">
+   <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Мол Варна">
+   <div class="project-info"><span class="cat">Търговски</span><h3>Търговски център Варна Плаза</h3><p>Търговски център с 85 магазина</p><div class="details"><span>📐 18,000 m²</span><span>📅 2022</span><span>📍 Варна</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="industrial">
+   <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600" alt="Фабрика">
+   <div class="project-info"><span class="cat">Промишлен</span><h3>Производствена база АвтоТех</h3><p>Производствено хале с административна част</p><div class="details"><span>📐 5,200 m²</span><span>📅 2021</span><span>📍 Стара Загора</span></div></div>
+  </div>
+  <div class="project-item fade-up" data-cat="residential">
+   <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Комплекс Банско">
+   <div class="project-info"><span class="cat">Жилищен</span><h3>Апартаментен комплекс Пирин</h3><p>Ваканционен комплекс с 32 апартамента</p><div class="details"><span>📐 4,100 m²</span><span>📅 2021</span><span>📍 Банско</span></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="cta"><div class="container"><h2>Имате проект?</h2><p>Нека обсъдим как можем да го реализираме заедно.</p><a href="contact.html" class="btn btn-yellow">Поискайте оферта</a></div></section>
+
+<footer>
+ <div class="safety-stripe"></div>
+ <div class="container" style="padding-top:40px">
+  <div class="footer-grid">
+   <div><a href="index.html" class="logo" style="font-size:1.5rem">ТИТАН<span style="color:var(--yellow)">СТРОЙ</span></a><p style="margin-top:15px">Надежден строителен партньор от 2008 г.</p></div>
+   <div><h4>Навигация</h4><ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul></div>
+   <div><h4>Услуги</h4><ul><li>Ново строителство</li><li>Ремонти</li><li>Реконструкции</li><li>Покриви</li><li>Интериорен дизайн</li></ul></div>
+   <div><h4>Контакти</h4><p>бул. Цариградско шосе 120<br>1113 София</p><p style="margin-top:10px">📞 +359 2 987 6543<br>✉ info@titanstroy.bg</p></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 ТитанСтрой. Всички права запазени.</span><span>Лиценз: IV категория строежи</span></div>
+ </div>
+</footer>
+<script>
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.project-item').forEach(item=>{if(f==='all'||item.dataset.cat===f){item.classList.remove('hidden');item.style.display=''}else{item.classList.add('hidden');item.style.display='none'}})})});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.2});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

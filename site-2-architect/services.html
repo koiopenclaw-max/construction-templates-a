@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Услуги - АрхиПлан</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2C3E50;--white:#FFFFFF;--accent:#3498DB;--light:#ECF0F1;--dark:#1A252F}
+body{font-family:'Work Sans',sans-serif;color:var(--blue);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Saira',sans-serif;font-weight:700}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+nav{position:fixed;top:0;left:0;width:100%;background:rgba(44,62,80,.97);backdrop-filter:blur(8px);z-index:1000;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
+nav .logo{font-family:'Saira',sans-serif;font-size:1.6rem;color:var(--white);font-weight:700;letter-spacing:1px}
+nav .logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:30px}
+nav ul li a{color:rgba(255,255,255,.8);font-size:.95rem;font-weight:500;transition:color .3s;position:relative}
+nav ul li a:hover,nav ul li a.active{color:var(--accent)}
+nav ul li a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:26px;height:2px;background:var(--white);transition:.3s}
+
+.page-header{padding:140px 0 80px;background:var(--blue);text-align:center;color:var(--white);position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.08) 1px,transparent 1px);background-size:40px 40px}
+.page-header h1{font-size:2.8rem;position:relative;z-index:1}
+.page-header p{margin-top:12px;opacity:.7;font-size:1.05rem;position:relative;z-index:1}
+
+.section-header{text-align:center;margin-bottom:60px}
+.section-header h2{font-size:2.4rem;color:var(--blue);margin-bottom:12px}
+.section-header .line{width:60px;height:3px;background:var(--accent);margin:0 auto 15px}
+.section-header p{color:#7f8c8d;font-size:1.05rem;max-width:550px;margin:0 auto}
+
+/* SERVICES */
+.services-section{padding:100px 0}
+.service-block{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px}
+.service-block:nth-child(even){direction:rtl}
+.service-block:nth-child(even) > *{direction:ltr}
+.service-block:last-child{margin-bottom:0}
+.service-img{border-radius:8px;overflow:hidden;position:relative}
+.service-img img{width:100%;height:350px;object-fit:cover;display:block}
+.service-img::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border:2px dashed var(--accent);border-radius:8px;margin:-12px;z-index:-1;opacity:.4}
+.service-text h3{font-size:1.6rem;margin-bottom:15px;display:flex;align-items:center;gap:12px}
+.service-text h3 .num{width:40px;height:40px;background:var(--accent);color:var(--white);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.service-text p{color:#5a6c7d;line-height:1.8;margin-bottom:12px;font-size:.95rem}
+.service-features{list-style:none;margin-top:15px}
+.service-features li{padding:6px 0;font-size:.92rem;color:#5a6c7d;display:flex;align-items:center;gap:10px}
+.service-features li::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;flex-shrink:0}
+
+/* PROCESS STEPPER */
+.process{padding:100px 0;background:var(--light);position:relative}
+.process::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.04) 1px,transparent 1px);background-size:30px 30px;pointer-events:none}
+.stepper{display:flex;justify-content:center;gap:0;position:relative;z-index:1;max-width:900px;margin:0 auto}
+.step{flex:1;text-align:center;position:relative;padding:0 15px}
+.step-circle{width:70px;height:70px;border-radius:50%;background:var(--white);border:3px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Saira',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent);position:relative;z-index:2;transition:all .3s}
+.step:hover .step-circle{background:var(--accent);color:var(--white);transform:scale(1.1)}
+.step-connector{position:absolute;top:35px;left:calc(50% + 35px);width:calc(100% - 70px);height:3px;background:var(--accent);opacity:.3;z-index:1}
+.step:last-child .step-connector{display:none}
+.step h4{font-size:1rem;margin-bottom:8px;color:var(--blue)}
+.step p{font-size:.82rem;color:#7f8c8d;line-height:1.5}
+
+/* TECH DRAWING DECORATION */
+.drawing-line{width:100%;height:1px;background:repeating-linear-gradient(90deg,var(--accent) 0,var(--accent) 10px,transparent 10px,transparent 15px);opacity:.2;margin:20px 0}
+
+/* CTA */
+.cta{padding:80px 0;background:var(--blue);text-align:center;color:var(--white);position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.08) 1px,transparent 1px);background-size:50px 50px}
+.cta h2{font-size:2rem;margin-bottom:15px;position:relative;z-index:1}
+.cta p{font-size:1.05rem;opacity:.8;margin-bottom:30px;position:relative;z-index:1}
+.btn{display:inline-block;padding:14px 36px;border-radius:4px;font-family:'Saira',sans-serif;font-weight:600;font-size:1rem;transition:all .3s;cursor:pointer;border:none}
+.btn-primary{background:var(--accent);color:var(--white);position:relative;z-index:1}
+.btn-primary:hover{background:#2980B9;transform:translateY(-2px);box-shadow:0 8px 25px rgba(52,152,219,.4)}
+
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col h4{font-family:'Saira',sans-serif;color:var(--white);font-size:1.1rem;margin-bottom:18px}
+.footer-col p,.footer-col a{font-size:.9rem;line-height:1.9;display:block;color:rgba(255,255,255,.6);transition:color .3s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:25px;text-align:center;font-size:.85rem}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:968px){
+  .service-block,.service-block:nth-child(even){grid-template-columns:1fr;direction:ltr}
+  .stepper{flex-direction:column;align-items:center;gap:30px}
+  .step-connector{display:none!important}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  nav ul{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--dark);flex-direction:column;padding:80px 40px;gap:25px;transition:right .3s}
+  nav ul.open{right:0}
+  .footer-grid{grid-template-columns:1fr}
+  .page-header h1{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Архи<span>План</span></a>
+  <ul id="navMenu">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html">За нас</a></li>
+    <li><a href="services.html" class="active">Услуги</a></li>
+    <li><a href="portfolio.html">Портфолио</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>Нашите услуги</h1>
+  <p>Пълен спектър от строителни и проектантски услуги с архитектурна прецизност</p>
+</section>
+
+<section class="services-section">
+  <div class="container">
+
+    <div class="service-block fade-up">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop" alt="Ново строителство">
+      </div>
+      <div class="service-text">
+        <h3><span class="num">01</span> Ново строителство</h3>
+        <p>Изграждаме жилищни сгради, еднофамилни къщи, търговски и промишлени обекти от нулата. Използваме съвременни строителни технологии и висококачествени материали, гарантиращи дълготрайност и енергийна ефективност.</p>
+        <ul class="service-features">
+          <li>Монолитно и стоманобетонно строителство</li>
+          <li>Сглобяеми конструкции и модулни сгради</li>
+          <li>Пасивни и енергийно ефективни сгради</li>
+          <li>Строителен надзор и управление на проекта</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawing-line"></div>
+
+    <div class="service-block fade-up">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=400&fit=crop" alt="Ремонти">
+      </div>
+      <div class="service-text">
+        <h3><span class="num">02</span> Ремонти</h3>
+        <p>Извършваме цялостни и частични ремонти на жилища, офиси и обществени сгради. Всеки ремонт започва с подробен план и 3D визуализация, за да видите крайния резултат преди началото на работата.</p>
+        <ul class="service-features">
+          <li>Цялостен ремонт на апартаменти и къщи</li>
+          <li>Ремонт на офис пространства</li>
+          <li>Подмяна на ВиК и електрически инсталации</li>
+          <li>Довършителни работи и боядисване</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawing-line"></div>
+
+    <div class="service-block fade-up">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop" alt="Реконструкции">
+      </div>
+      <div class="service-text">
+        <h3><span class="num">03</span> Реконструкции</h3>
+        <p>Специализираме се в реконструкцията на стари сгради, възстановяване на исторически фасади и укрепване на конструкции. Съхраняваме характера на постройката, като я адаптираме към съвременните изисквания.</p>
+        <ul class="service-features">
+          <li>Конструктивно укрепване и усилване</li>
+          <li>Реставрация на фасади и покриви</li>
+          <li>Преустройство и промяна на предназначение</li>
+          <li>Сеизмично осигуряване на сгради</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawing-line"></div>
+
+    <div class="service-block fade-up">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=400&fit=crop" alt="Интериорен дизайн">
+      </div>
+      <div class="service-text">
+        <h3><span class="num">04</span> Интериорен дизайн</h3>
+        <p>Нашите дизайнери създават уникални интериорни решения, които отразяват вашата индивидуалност. От концепцията до реализацията, ние се грижим за всеки детайл от вашето пространство.</p>
+        <ul class="service-features">
+          <li>3D визуализация и проектиране</li>
+          <li>Избор на материали и мебели</li>
+          <li>Осветителен и цветови дизайн</li>
+          <li>Авторски надзор при изпълнение</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawing-line"></div>
+
+    <div class="service-block fade-up">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?w=600&h=400&fit=crop" alt="Покриви">
+      </div>
+      <div class="service-text">
+        <h3><span class="num">05</span> Покриви</h3>
+        <p>Изграждаме и ремонтираме всички видове покривни конструкции. Прилагаме съвременни хидроизолационни и топлоизолационни системи за максимална защита на вашата сграда.</p>
+        <ul class="service-features">
+          <li>Нови покривни конструкции</li>
+          <li>Ремонт и подмяна на покривни покрития</li>
+          <li>Хидроизолация и топлоизолация</li>
+          <li>Водосточни системи и мълниезащита</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="process">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="line"></div>
+      <h2>Нашият процес</h2>
+      <p>Четири стъпки от идеята до реализацията</p>
+    </div>
+    <div class="stepper fade-up">
+      <div class="step">
+        <div class="step-circle">1</div>
+        <div class="step-connector"></div>
+        <h4>Проект</h4>
+        <p>Изготвяме подробен архитектурен проект с 3D визуализации и технически чертежи</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-connector"></div>
+        <h4>Разрешение</h4>
+        <p>Получаваме всички необходими разрешителни документи и съгласувания</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-connector"></div>
+        <h4>Строителство</h4>
+        <p>Изпълняваме строителните дейности с непрекъснат контрол на качеството</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <h4>Приемане</h4>
+        <p>Предаваме обекта с пълна документация и гаранция за качество</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2 class="fade-up">Нуждаете се от професионална консултация?</h2>
+    <p class="fade-up">Свържете се с нас за безплатен оглед и детайлна оферта</p>
+    <a href="contact.html" class="btn btn-primary fade-up">Поискай оферта</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>АрхиПлан</h4>
+        <p>Проектиране и строителство с прецизност от 2010 година. Вашият надежден партньор за всеки строителен проект в България.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="index.html">Начало</a>
+        <a href="about.html">За нас</a>
+        <a href="services.html">Услуги</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="contact.html">Контакти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="services.html">Ново строителство</a>
+        <a href="services.html">Ремонти</a>
+        <a href="services.html">Реконструкции</a>
+        <a href="services.html">Интериорен дизайн</a>
+        <a href="services.html">Покриви</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <p>ул. Алабин 50, 1000 София</p>
+        <p>+359 2 811 2233</p>
+        <p>info@archiplan.bg</p>
+        <p>Пон-Пет: 08:00 - 18:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 АрхиПлан ЕООД. Всички права запазени.
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

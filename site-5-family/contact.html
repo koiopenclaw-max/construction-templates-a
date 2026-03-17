@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти | Стоянови и Синове</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --brick: #8B2500; --wheat: #F5DEB3; --white: #FFFFFF; --brick-dark: #6B1D00; --text: #3A2A1A; --gray: #7A6A5A; }
+        body { font-family: 'Lato', sans-serif; color: var(--text); line-height: 1.7; background: var(--white); }
+        h1, h2, h3, h4 { font-family: 'Archivo', sans-serif; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(139,37,0,0.95); backdrop-filter: blur(8px); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1200px; margin: 0 auto; }
+        .nav-logo { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--wheat); }
+        .nav-logo span { color: var(--white); font-weight: 400; font-size: 0.85rem; display: block; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--wheat); font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--wheat); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 26px; height: 2px; background: var(--wheat); transition: 0.3s; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; flex-direction: column; background: var(--brick); padding: 20px 24px; gap: 16px; }
+            .nav-links.open { display: flex; }
+        }
+
+        .page-header { padding: 160px 0 80px; background: linear-gradient(135deg, var(--brick), var(--brick-dark)); color: var(--white); text-align: center; }
+        .page-header h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 16px; }
+        .page-header p { font-size: 1.15rem; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+
+        .section-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--brick); font-weight: 700; margin-bottom: 12px; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 20px; }
+
+        /* Contact Layout */
+        .contact-section { padding: 100px 0; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+
+        /* Info Side */
+        .contact-info { display: flex; flex-direction: column; gap: 24px; }
+        .info-card { display: flex; align-items: flex-start; gap: 16px; padding: 24px; background: var(--white); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: 0.3s; }
+        .info-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(139,37,0,0.1); }
+        .info-icon { width: 48px; height: 48px; background: var(--brick); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .info-icon svg { width: 22px; height: 22px; fill: var(--wheat); }
+        .info-card h4 { font-size: 1rem; color: var(--text); margin-bottom: 4px; }
+        .info-card p { color: var(--gray); font-size: 0.9rem; }
+        .info-card a { color: var(--brick); font-weight: 700; }
+        .info-card a:hover { color: var(--brick-dark); }
+
+        .family-note { background: var(--wheat); border-radius: 12px; padding: 30px; margin-top: 8px; }
+        .family-note h4 { font-size: 1.1rem; color: var(--brick); margin-bottom: 8px; }
+        .family-note p { color: var(--gray); font-size: 0.9rem; line-height: 1.8; }
+
+        /* Form Side */
+        .contact-form { background: var(--white); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .contact-form h3 { font-size: 1.5rem; color: var(--text); margin-bottom: 8px; }
+        .contact-form > p { color: var(--gray); font-size: 0.9rem; margin-bottom: 28px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid rgba(139,37,0,0.12); border-radius: 8px; font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--white); transition: border-color 0.3s; outline: none; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--brick); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238B2500'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+        .btn-primary { background: var(--wheat); color: var(--brick); padding: 14px 36px; border-radius: 6px; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; width: 100%; justify-content: center; }
+        .btn-primary:hover { background: var(--white); border: 2px solid var(--brick); transform: translateY(-2px); }
+        .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Working Hours */
+        .hours-section { padding: 80px 0; background: var(--wheat); }
+        .hours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .hours-card { background: var(--white); border-radius: 12px; padding: 30px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+        .hours-card h4 { color: var(--brick); font-size: 1rem; margin-bottom: 8px; }
+        .hours-card p { color: var(--gray); font-size: 0.9rem; }
+        .hours-card .time { font-family: 'Archivo', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-top: 8px; }
+
+        /* Map */
+        .map-section { padding: 0; }
+        .map-container { width: 100%; height: 350px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; }
+
+        /* CTA */
+        .cta { padding: 80px 0; text-align: center; background: var(--brick); }
+        .cta h2 { font-size: 2.2rem; color: var(--white); margin-bottom: 16px; }
+        .cta p { color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 1.1rem; }
+        .cta .btn-primary { width: auto; }
+
+        footer { background: #2A1A0A; color: rgba(255,255,255,0.7); padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand h3 { font-family: 'Archivo', sans-serif; font-size: 1.4rem; color: var(--wheat); margin-bottom: 12px; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.8; }
+        footer h4 { font-family: 'Archivo', sans-serif; color: var(--white); margin-bottom: 16px; font-size: 1rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 8px; }
+        footer ul a { color: rgba(255,255,255,0.6); font-size: 0.9rem; transition: color 0.3s; }
+        footer ul a:hover { color: var(--wheat); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 0.85rem; }
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+            .form-row { grid-template-columns: 1fr; }
+            .hours-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Стоянови и Синове<span>от 1985 г.</span></a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За нас</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="portfolio.html">Портфолио</a></li>
+                <li><a href="contact.html" class="active">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Свържете се с нас</h1>
+            <p>Разкажете ни за вашия проект и ние ще подготвим индивидуална оферта — честно и прозрачно, както винаги.</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info fade-up">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Телефон</h4>
+                            <p><a href="tel:+35962620345">+359 62 620 345</a></p>
+                            <p style="font-size:.8rem;color:#999;margin-top:4px">Пон-Пет: 08:00 - 17:00</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Имейл</h4>
+                            <p><a href="mailto:office@stoyanovsynove.bg">office@stoyanovsynove.bg</a></p>
+                            <p style="font-size:.8rem;color:#999;margin-top:4px">Отговаряме до 24 часа</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Адрес</h4>
+                            <p>ул. Хан Аспарух 15<br>5000 Велико Търново</p>
+                        </div>
+                    </div>
+
+                    <div class="family-note">
+                        <h4>Семеен подход, лична отговорност</h4>
+                        <p>При нас няма анонимни мениджъри — говорите директно със собствениците. Дядо Стоян основа фирмата, баща ни я разви, а ние я продължаваме. Всяка оферта е лично гарантирана от семейството.</p>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-up">
+                    <h3>Поискай оферта</h3>
+                    <p>Попълнете формуляра и ще се свържем с вас за безплатна консултация.</p>
+                    <form onsubmit="event.preventDefault(); alert('Благодарим за запитването! Ще се свържем с вас до 24 часа.');">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Име *</label>
+                                <input type="text" id="name" name="name" placeholder="Вашето име" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+359 ..." required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Имейл *</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="object-type">Тип обект</label>
+                                <select id="object-type" name="object-type">
+                                    <option value="" disabled selected>Изберете тип</option>
+                                    <option value="жилище">Жилище</option>
+                                    <option value="офис">Офис</option>
+                                    <option value="промишлено">Промишлено</option>
+                                    <option value="друго">Друго</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget">Бюджет</label>
+                                <select id="budget" name="budget">
+                                    <option value="" disabled selected>Изберете диапазон</option>
+                                    <option value="до 50к">до 50 000 лв.</option>
+                                    <option value="50-100к">50 000 - 100 000 лв.</option>
+                                    <option value="100-200к">100 000 - 200 000 лв.</option>
+                                    <option value="200к+">над 200 000 лв.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание на проекта</label>
+                            <textarea id="description" name="description" placeholder="Разкажете ни повече за вашия проект — какво строите или ремонтирате, площ, срокове..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                            Изпрати запитване
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Working Hours -->
+    <section class="hours-section">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:40px" class="fade-up">
+                <p class="section-label">Работно време</p>
+                <h2 class="section-title">Кога ни намирате</h2>
+            </div>
+            <div class="hours-grid">
+                <div class="hours-card fade-up">
+                    <h4>Понеделник - Петък</h4>
+                    <p>Офис и строителни обекти</p>
+                    <div class="time">08:00 - 17:00</div>
+                </div>
+                <div class="hours-card fade-up">
+                    <h4>Събота</h4>
+                    <p>Само по договорка</p>
+                    <div class="time">09:00 - 13:00</div>
+                </div>
+                <div class="hours-card fade-up">
+                    <h4>Неделя</h4>
+                    <p>Почивен ден</p>
+                    <div class="time">Затворено</div>
+                </div>
+                <div class="hours-card fade-up">
+                    <h4>Спешни случаи</h4>
+                    <p>Повреди и аварии</p>
+                    <div class="time">24/7</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section">
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2907.5!2d25.6285!3d43.0757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDA0JzMyLjUiTiAyNcKwMzcnNDIuNiJF!5e0!3m2!1sbg!2sbg!4v1" loading="lazy" title="Стоянови и Синове офис"></iframe>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container fade-up">
+            <h2>Предпочитате да се обадите?</h2>
+            <p>Говорете директно с Петър Стоянов — управител и майстор от третото поколение.</p>
+            <a href="tel:+35962620345" class="btn-primary">+359 62 620 345</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Стоянови и Синове</h3>
+                    <p>Семеен строителен бизнес, основан през 1985 г. Три поколения майстори, които строят с честност и отдаденост в община Велико Търново.</p>
+                </div>
+                <div>
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Начало</a></li>
+                        <li><a href="about.html">За нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="portfolio.html">Портфолио</a></li>
+                        <li><a href="contact.html">Контакти</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li><a href="services.html">Ново строителство</a></li>
+                        <li><a href="services.html">Ремонти</a></li>
+                        <li><a href="services.html">Реконструкции</a></li>
+                        <li><a href="services.html">Покриви</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Контакти</h4>
+                    <ul>
+                        <li>ул. Хан Аспарух 15</li>
+                        <li>5000 Велико Търново</li>
+                        <li>+359 62 620 345</li>
+                        <li>office@stoyanovsynove.bg</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Стоянови и Синове ЕООД. Всички права запазени.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

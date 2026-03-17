@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АрхиПлан - Архитектурно проектиране и строителство</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2C3E50;--white:#FFFFFF;--accent:#3498DB;--light:#ECF0F1;--dark:#1A252F}
+body{font-family:'Work Sans',sans-serif;color:var(--blue);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Saira',sans-serif;font-weight:700}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;background:rgba(44,62,80,.97);backdrop-filter:blur(8px);z-index:1000;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
+nav .logo{font-family:'Saira',sans-serif;font-size:1.6rem;color:var(--white);font-weight:700;letter-spacing:1px}
+nav .logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:30px}
+nav ul li a{color:rgba(255,255,255,.8);font-size:.95rem;font-weight:500;transition:color .3s;position:relative}
+nav ul li a:hover,nav ul li a.active{color:var(--accent)}
+nav ul li a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:26px;height:2px;background:var(--white);transition:.3s}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--blue);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:
+  linear-gradient(rgba(52,152,219,.12) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(52,152,219,.12) 1px,transparent 1px),
+  linear-gradient(rgba(52,152,219,.06) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(52,152,219,.06) 1px,transparent 1px);
+background-size:100px 100px,100px 100px,20px 20px,20px 20px;animation:gridMove 20s linear infinite}
+@keyframes gridMove{to{background-position:100px 100px,100px 100px,20px 20px,20px 20px}}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(44,62,80,.85),rgba(26,37,47,.95))}
+.hero-content{position:relative;z-index:2;text-align:center;color:var(--white);max-width:800px;padding:0 20px}
+.hero-content h1{font-size:3.5rem;line-height:1.15;margin-bottom:20px;letter-spacing:-1px}
+.hero-content h1 span{color:var(--accent)}
+.hero-content p{font-size:1.2rem;font-weight:300;opacity:.85;margin-bottom:40px;line-height:1.7}
+.btn{display:inline-block;padding:14px 36px;border-radius:4px;font-family:'Saira',sans-serif;font-weight:600;font-size:1rem;transition:all .3s;cursor:pointer;border:none}
+.btn-primary{background:var(--accent);color:var(--white)}
+.btn-primary:hover{background:#2980B9;transform:translateY(-2px);box-shadow:0 8px 25px rgba(52,152,219,.4)}
+.btn-outline{border:2px solid var(--white);color:var(--white);background:transparent;margin-left:15px}
+.btn-outline:hover{background:var(--white);color:var(--blue)}
+
+/* STATS */
+.stats{background:var(--white);padding:60px 0;border-bottom:1px solid var(--light)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+.stat-item{padding:20px}
+.stat-item .number{font-family:'Saira',sans-serif;font-size:3rem;font-weight:700;color:var(--accent);line-height:1}
+.stat-item .label{font-size:.95rem;color:#7f8c8d;margin-top:8px;font-weight:400}
+
+/* SERVICES PREVIEW */
+.services-preview{padding:100px 0;background:var(--white)}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header h2{font-size:2.4rem;color:var(--blue);margin-bottom:12px}
+.section-header .line{width:60px;height:3px;background:var(--accent);margin:0 auto 15px}
+.section-header p{color:#7f8c8d;font-size:1.05rem;max-width:550px;margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.service-card{background:var(--white);border:1px solid #e0e6ed;border-radius:6px;padding:40px 30px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent);transform:scaleX(0);transition:transform .3s}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(44,62,80,.1)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-card .icon{font-size:2.8rem;margin-bottom:20px}
+.service-card h3{font-size:1.2rem;margin-bottom:12px;color:var(--blue)}
+.service-card p{font-size:.92rem;color:#7f8c8d;line-height:1.7}
+
+/* FEATURED PROJECTS */
+.featured{padding:100px 0;background:var(--light);position:relative}
+.featured::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(52,152,219,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;position:relative;z-index:1}
+.project-card{border-radius:8px;overflow:hidden;position:relative;height:320px;cursor:pointer}
+.project-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.project-card:hover img{transform:scale(1.08)}
+.project-card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,62,80,.9),transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:25px;color:var(--white);transition:background .3s}
+.project-card:hover .overlay{background:linear-gradient(to top,rgba(44,62,80,.95),rgba(44,62,80,.3))}
+.project-card .overlay h3{font-size:1.15rem;margin-bottom:5px}
+.project-card .overlay span{font-size:.85rem;color:var(--accent)}
+
+/* CTA */
+.cta{padding:100px 0;background:var(--blue);text-align:center;color:var(--white);position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.08) 1px,transparent 1px);background-size:50px 50px}
+.cta h2{font-size:2.4rem;margin-bottom:15px;position:relative;z-index:1}
+.cta p{font-size:1.1rem;opacity:.8;margin-bottom:35px;position:relative;z-index:1}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col h4{font-family:'Saira',sans-serif;color:var(--white);font-size:1.1rem;margin-bottom:18px}
+.footer-col p,.footer-col a{font-size:.9rem;line-height:1.9;display:block;color:rgba(255,255,255,.6);transition:color .3s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:25px;text-align:center;font-size:.85rem}
+
+/* FADE ANIMATION */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:968px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .services-grid,.projects-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-content h1{font-size:2.5rem}
+}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  nav ul{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--dark);flex-direction:column;padding:80px 40px;gap:25px;transition:right .3s}
+  nav ul.open{right:0}
+  .services-grid,.projects-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .hero-content h1{font-size:2rem}
+  .btn-outline{margin-left:0;margin-top:12px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Архи<span>План</span></a>
+  <ul id="navMenu">
+    <li><a href="index.html" class="active">Начало</a></li>
+    <li><a href="about.html">За нас</a></li>
+    <li><a href="services.html">Услуги</a></li>
+    <li><a href="portfolio.html">Портфолио</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Прецизност в<br><span>архитектурата</span> и строителството</h1>
+    <p>От чертежа до ключа. АрхиПлан превръща вашите идеи в реалност с инженерна точност и внимание към всеки детайл. Повече от 14 години опит в проектирането и изграждането на жилищни и търговски обекти в цяла България.</p>
+    <a href="contact.html" class="btn btn-primary">Поискай оферта</a>
+    <a href="portfolio.html" class="btn btn-outline">Нашите проекти</a>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="number" data-target="350">0</div>
+        <div class="label">Завършени проекта</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="number" data-target="14">0</div>
+        <div class="label">Години опит</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="number" data-target="48">0</div>
+        <div class="label">Специалисти в екипа</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="number" data-target="98">0</div>
+        <div class="label">% Доволни клиенти</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services-preview">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="line"></div>
+      <h2>Нашите услуги</h2>
+      <p>Пълен спектър от строителни и проектантски услуги, изпълнени с прецизност</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="icon">&#9964;</div>
+        <h3>Ново строителство</h3>
+        <p>Изграждане на жилищни сгради, къщи и търговски обекти от нулата с модерни технологии и материали.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="icon">&#9881;</div>
+        <h3>Ремонти и реконструкции</h3>
+        <p>Цялостни ремонти на апартаменти, офиси и обществени сгради. Реконструкция на стари постройки.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="icon">&#9826;</div>
+        <h3>Интериорен дизайн</h3>
+        <p>Професионален интериорен дизайн, който съчетава функционалност и естетика в хармонично пространство.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:45px" class="fade-up">
+      <a href="services.html" class="btn btn-primary">Всички услуги</a>
+    </div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="line"></div>
+      <h2>Избрани проекти</h2>
+      <p>Разгледайте някои от нашите най-успешни реализации</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card fade-up">
+        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop" alt="Резиденция Витоша">
+        <div class="overlay">
+          <h3>Резиденция Витоша</h3>
+          <span>Жилищно строителство</span>
+        </div>
+      </div>
+      <div class="project-card fade-up">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop" alt="Бизнес център Сердика">
+        <div class="overlay">
+          <h3>Бизнес център Сердика</h3>
+          <span>Търговски обект</span>
+        </div>
+      </div>
+      <div class="project-card fade-up">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop" alt="Къща Бояна">
+        <div class="overlay">
+          <h3>Къща Бояна</h3>
+          <span>Жилищно строителство</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:45px" class="fade-up">
+      <a href="portfolio.html" class="btn btn-primary">Цялото портфолио</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2 class="fade-up">Имате проект? Нека го реализираме заедно.</h2>
+    <p class="fade-up">Свържете се с нас за безплатна консултация и индивидуална оферта</p>
+    <a href="contact.html" class="btn btn-primary fade-up">Свържете се с нас</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>АрхиПлан</h4>
+        <p>Проектиране и строителство с прецизност от 2010 година. Вашият надежден партньор за всеки строителен проект в България.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="index.html">Начало</a>
+        <a href="about.html">За нас</a>
+        <a href="services.html">Услуги</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="contact.html">Контакти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="services.html">Ново строителство</a>
+        <a href="services.html">Ремонти</a>
+        <a href="services.html">Реконструкции</a>
+        <a href="services.html">Интериорен дизайн</a>
+        <a href="services.html">Покриви</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <p>ул. Алабин 50, 1000 София</p>
+        <p>+359 2 811 2233</p>
+        <p>info@archiplan.bg</p>
+        <p>Пон-Пет: 08:00 - 18:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 АрхиПлан ЕООД. Всички права запазени.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll fade-up
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// Counter animation
+function animateCounters(){
+  document.querySelectorAll('.number[data-target]').forEach(counter=>{
+    const target=+counter.getAttribute('data-target');
+    const duration=2000;
+    const start=performance.now();
+    function update(now){
+      const elapsed=now-start;
+      const progress=Math.min(elapsed/duration,1);
+      const eased=1-Math.pow(1-progress,3);
+      counter.textContent=Math.floor(eased*target)+(target===98?'%':'+');
+      if(progress<1)requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+const statsObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){animateCounters();statsObs.disconnect()}})},{threshold:0.3});
+statsObs.observe(document.querySelector('.stats'));
+</script>
+</body>
+</html>

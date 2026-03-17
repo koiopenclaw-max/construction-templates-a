@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЕкоДом - Устойчиво зелено строителство</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --forest: #2D4A22;
+            --gold: #C4A35A;
+            --clay: #F0ECE3;
+            --forest-light: #3d6330;
+            --forest-dark: #1e3217;
+            --text: #2a2a2a;
+        }
+        body { font-family: 'Libre Franklin', sans-serif; color: var(--text); background: var(--clay); overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Nunito', sans-serif; }
+
+        /* Nav */
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(45,74,34,0.95); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; transition: box-shadow .3s; }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo svg { width: 36px; height: 36px; }
+        .logo span { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .logo small { color: var(--gold); font-size: .7rem; display: block; margin-top: -4px; font-weight: 400; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: .95rem; font-weight: 500; transition: color .3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--gold); border-radius: 2px; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: .3s; }
+
+        /* Carbon Badge */
+        .carbon-badge { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: var(--forest); color: #fff; border-radius: 50%; width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .6rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
+        .carbon-badge svg { width: 20px; height: 20px; margin-bottom: 2px; }
+        .carbon-badge strong { font-size: .65rem; color: var(--gold); }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; background: linear-gradient(135deg, rgba(45,74,34,0.88), rgba(30,50,23,0.92)), url('https://images.unsplash.com/photo-1518005068251-37900150dfca?w=1600') center/cover; color: #fff; padding: 120px 5% 80px; }
+        .hero-content { max-width: 800px; }
+        .hero-leaf { position: absolute; opacity: .08; }
+        .hero-leaf.l1 { top: 15%; left: 8%; width: 120px; transform: rotate(-20deg); }
+        .hero-leaf.l2 { bottom: 20%; right: 10%; width: 90px; transform: rotate(30deg); }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; margin-bottom: 20px; line-height: 1.15; }
+        .hero h1 em { color: var(--gold); font-style: normal; }
+        .hero p { font-size: 1.15rem; font-weight: 300; margin-bottom: 35px; line-height: 1.7; opacity: .9; }
+        .energy-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(196,163,90,0.2); border: 1px solid var(--gold); border-radius: 50px; padding: 8px 20px; margin-bottom: 30px; font-size: .85rem; }
+        .energy-badge span { color: var(--gold); font-weight: 700; font-size: 1.1rem; }
+        .hero-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .95rem; transition: all .3s; border: none; cursor: pointer; }
+        .btn-primary { background: var(--gold); color: var(--forest-dark); }
+        .btn-primary:hover { background: #d4b36a; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196,163,90,0.4); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--forest); }
+        .stat-item { padding: 40px 20px; text-align: center; color: #fff; border-right: 1px solid rgba(255,255,255,0.1); }
+        .stat-item:last-child { border: none; }
+        .stat-item svg { width: 32px; height: 32px; margin-bottom: 12px; fill: var(--gold); }
+        .stat-num { font-family: 'Nunito', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--gold); }
+        .stat-label { font-size: .85rem; opacity: .8; margin-top: 5px; }
+
+        /* Section */
+        .section { padding: 90px 5%; }
+        .section-header { text-align: center; max-width: 650px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--forest); margin-bottom: 15px; }
+        .section-header p { color: #666; line-height: 1.7; }
+        .leaf-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .leaf-divider svg { width: 22px; height: 22px; fill: var(--gold); }
+        .leaf-divider span { width: 40px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+        /* Services Preview */
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .service-card { background: #fff; border-radius: 16px; padding: 40px 30px; text-align: center; transition: all .3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid rgba(45,74,34,0.08); }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(45,74,34,0.12); }
+        .service-icon { width: 70px; height: 70px; background: linear-gradient(135deg, var(--forest), var(--forest-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .service-icon svg { width: 30px; height: 30px; fill: #fff; }
+        .service-card h3 { font-size: 1.15rem; color: var(--forest); margin-bottom: 12px; }
+        .service-card p { font-size: .9rem; color: #666; line-height: 1.6; }
+
+        /* Wood texture section */
+        .wood-section { background: linear-gradient(135deg, #8B7355 0%, #A0896C 25%, #8B7355 50%, #7A6548 75%, #8B7355 100%), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); padding: 90px 5%; color: #fff; position: relative; }
+        .wood-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(0,0,0,0.02) 8px, rgba(0,0,0,0.02) 10px); }
+        .wood-content { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+
+        /* Featured Projects */
+        .projects-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .project-card { border-radius: 16px; overflow: hidden; position: relative; height: 320px; cursor: pointer; }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+        .project-card:hover img { transform: scale(1.08); }
+        .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,74,34,0.9) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; color: #fff; }
+        .project-overlay h3 { font-size: 1.15rem; margin-bottom: 5px; }
+        .project-overlay small { opacity: .8; font-size: .8rem; }
+        .energy-tag { display: inline-flex; align-items: center; gap: 5px; background: var(--gold); color: var(--forest-dark); padding: 3px 10px; border-radius: 20px; font-size: .7rem; font-weight: 700; position: absolute; top: 15px; right: 15px; }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, var(--forest), var(--forest-dark)); padding: 80px 5%; text-align: center; color: #fff; position: relative; overflow: hidden; }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 15px; }
+        .cta-section p { opacity: .85; max-width: 550px; margin: 0 auto 30px; line-height: 1.7; }
+
+        /* Footer */
+        footer { background: var(--forest-dark); color: rgba(255,255,255,0.8); padding: 60px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: .85rem; line-height: 1.7; margin-top: 15px; opacity: .7; }
+        footer h4 { font-family: 'Nunito', sans-serif; color: var(--gold); margin-bottom: 18px; font-size: .95rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: .85rem; transition: color .3s; }
+        footer ul a:hover { color: var(--gold); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: .8rem; opacity: .6; max-width: 1200px; margin: 0 auto; }
+        .cert-badges { display: flex; gap: 15px; margin-top: 15px; }
+        .cert-badge { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 14px; font-size: .7rem; color: var(--gold); font-weight: 600; }
+
+        /* Fade animation */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 70px; left: 0; width: 100%; background: var(--forest); flex-direction: column; padding: 20px 5%; gap: 15px; transform: translateY(-120%); transition: transform .3s; }
+            .nav-links.open { transform: translateY(0); }
+            .hero h1 { font-size: 2rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .services-grid, .projects-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .carbon-badge { width: 64px; height: 64px; font-size: .5rem; bottom: 12px; right: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="index.html" class="logo">
+        <svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+        <span>ЕкоДом<small>GREEN BUILDING</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Начало</a></li>
+        <li><a href="about.html">За нас</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="portfolio.html">Портфолио</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- Carbon Neutral Badge -->
+<div class="carbon-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+    <strong>CO2 Neutral</strong>
+    от 2020
+</div>
+
+<!-- Hero -->
+<section class="hero">
+    <svg class="hero-leaf l1" viewBox="0 0 100 140" fill="#fff"><path d="M50 0C30 25 0 50 0 90c0 28 22 50 50 50s50-22 50-50C100 50 70 25 50 0z"/></svg>
+    <svg class="hero-leaf l2" viewBox="0 0 100 140" fill="#fff"><path d="M50 0C30 25 0 50 0 90c0 28 22 50 50 50s50-22 50-50C100 50 70 25 50 0z"/></svg>
+    <div class="hero-content fade-up">
+        <div class="energy-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span>A+</span> Енергиен клас на всяка наша сграда
+        </div>
+        <h1>Строим <em>зеленото</em> бъдеще<br>на България</h1>
+        <p>ЕкоДом е водещата компания за устойчиво строителство в България. Проектираме и изграждаме пасивни къщи, енергийно ефективни сгради и зелени пространства с грижа за природата и вашия комфорт.</p>
+        <div class="hero-btns">
+            <a href="contact.html" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Безплатна консултация
+            </a>
+            <a href="portfolio.html" class="btn btn-outline">Вижте проектите ни</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+    <div class="stat-item fade-up">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <div class="stat-num">180+</div>
+        <div class="stat-label">Зелени проекта</div>
+    </div>
+    <div class="stat-item fade-up">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div class="stat-num">45%</div>
+        <div class="stat-label">Спестена енергия</div>
+    </div>
+    <div class="stat-item fade-up">
+        <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20" fill="none" stroke="#2D4A22" stroke-width="1"/></svg>
+        <div class="stat-num">2400т</div>
+        <div class="stat-label">CO2 спестен</div>
+    </div>
+    <div class="stat-item fade-up">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <div class="stat-num">14</div>
+        <div class="stat-label">Години опит</div>
+    </div>
+</section>
+
+<!-- Services Preview -->
+<section class="section">
+    <div class="section-header fade-up">
+        <div class="leaf-divider">
+            <span></span>
+            <svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg>
+            <span></span>
+        </div>
+        <h2>Нашите зелени услуги</h2>
+        <p>Предлагаме пълен спектър от услуги за устойчиво строителство — от проектиране на пасивни къщи до зелени покриви и соларни системи.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card fade-up">
+            <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+            </div>
+            <h3>Пасивни къщи</h3>
+            <p>Проектиране и строителство на сертифицирани пасивни къщи с минимална енергийна консумация и максимален комфорт.</p>
+        </div>
+        <div class="service-card fade-up">
+            <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h3>Енергийна ефективност</h3>
+            <p>Цялостни решения за енергийна ефективност — изолация, термопомпи, рекуператори и интелигентно управление.</p>
+        </div>
+        <div class="service-card fade-up">
+            <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3>Зелени покриви</h3>
+            <p>Монтаж на зелени покриви и соларни панели, които намаляват въглеродния отпечатък и разходите за енергия.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects - Wood section -->
+<section class="wood-section">
+    <div class="wood-content">
+        <div class="section-header fade-up" style="color:#fff">
+            <div class="leaf-divider">
+                <span></span>
+                <svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg>
+                <span></span>
+            </div>
+            <h2 style="color:#fff">Избрани проекти</h2>
+            <p style="color:rgba(255,255,255,0.8)">Някои от нашите най-успешни зелени проекти, сертифицирани по международни стандарти.</p>
+        </div>
+        <div class="projects-row">
+            <div class="project-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Пасивна къща Витоша">
+                <div class="energy-tag">A+ Клас</div>
+                <div class="project-overlay">
+                    <h3>Пасивна къща „Витоша"</h3>
+                    <small>София | 220 м2 | Пасивен стандарт</small>
+                </div>
+            </div>
+            <div class="project-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Зелен офис Парк">
+                <div class="energy-tag">LEED Gold</div>
+                <div class="project-overlay">
+                    <h3>Зелен офис „Парк"</h3>
+                    <small>Пловдив | 1800 м2 | LEED сертификат</small>
+                </div>
+            </div>
+            <div class="project-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600" alt="Еко вила Созопол">
+                <div class="energy-tag">BREEAM</div>
+                <div class="project-overlay">
+                    <h3>Еко вила „Созопол"</h3>
+                    <small>Созопол | 340 м2 | Зелен покрив</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability CTA -->
+<section class="cta-section">
+    <svg style="position:absolute;top:-1px;left:0;width:100%" viewBox="0 0 1440 60" fill="none"><path d="M0 60V0c240 40 480 60 720 50S1200 10 1440 0v60z" fill="var(--clay)" opacity=".08"/></svg>
+    <div class="fade-up" style="position:relative;z-index:1">
+        <h2>Готови ли сте за зелена промяна?</h2>
+        <p>Свържете се с нас за безплатна консултация и научете как можете да намалите въглеродния си отпечатък с до 70% чрез устойчиво строителство.</p>
+        <a href="contact.html" class="btn btn-primary">Поискайте безплатна оферта</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+                <span>ЕкоДом</span>
+            </a>
+            <p>Водеща компания за устойчиво и зелено строителство в България от 2012 година. Сертифицирани по LEED и BREEAM стандарти.</p>
+            <div class="cert-badges">
+                <span class="cert-badge">LEED</span>
+                <span class="cert-badge">BREEAM</span>
+                <span class="cert-badge">Passive House</span>
+            </div>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <ul>
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За нас</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="portfolio.html">Портфолио</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Услуги</h4>
+            <ul>
+                <li><a href="services.html">Пасивни къщи</a></li>
+                <li><a href="services.html">Зелени ремонти</a></li>
+                <li><a href="services.html">Соларни системи</a></li>
+                <li><a href="services.html">Зелени покриви</a></li>
+                <li><a href="services.html">Еко интериор</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Контакти</h4>
+            <ul>
+                <li><a href="tel:+35928461122">+359 2 846 1122</a></li>
+                <li><a href="mailto:info@ekodom.bg">info@ekodom.bg</a></li>
+                <li><a href="#">ул. Шипка 34, 1504 София</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 ЕкоДом ЕООД. Всички права запазени. Въглеродно неутрални от 2020.
+    </div>
+</footer>
+
+<script>
+    // Scroll nav shadow
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    // Fade-up observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

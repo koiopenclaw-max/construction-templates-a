@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Строителни шаблони — Колекция А | България</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
+h1,h2,h3{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:2px}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+header{padding:60px 20px 40px;text-align:center;border-bottom:1px solid #222}
+header h1{font-size:3rem;font-weight:900;margin-bottom:10px}
+header h1 span{color:#F0A500}
+header p{color:#888;font-size:1.1rem;max-width:600px;margin:0 auto}
+.badge{display:inline-block;margin-top:15px;padding:6px 20px;border:1px solid #F0A500;color:#F0A500;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:2px}
+
+/* GRID */
+.gallery{max-width:1300px;margin:60px auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:35px}
+
+.card{position:relative;background:#141414;border:1px solid #222;overflow:hidden;transition:all .4s ease;cursor:pointer}
+.card:hover{border-color:#444;transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+
+.card-preview{position:relative;height:260px;overflow:hidden}
+.card-preview img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.card:hover .card-preview img{transform:scale(1.05)}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8));display:flex;align-items:flex-end;padding:25px}
+.card-overlay .vibe{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+
+.card-body{padding:25px}
+.card-body h3{font-size:1.3rem;margin-bottom:8px;letter-spacing:1px}
+.card-body p{color:#999;font-size:.9rem;line-height:1.6;margin-bottom:20px}
+
+.palette{display:flex;gap:8px;margin-bottom:20px}
+.swatch{width:30px;height:30px;border-radius:4px;border:2px solid #333}
+
+.pages{display:flex;flex-wrap:wrap;gap:8px}
+.page-link{display:inline-block;padding:6px 14px;background:#1a1a1a;border:1px solid #333;color:#ccc;font-size:.8rem;transition:all .3s}
+.page-link:hover{border-color:#F0A500;color:#F0A500}
+
+.card-number{position:absolute;top:15px;right:15px;font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:900;color:rgba(255,255,255,.08);line-height:1}
+
+/* Color accents per card */
+.card[data-accent="yellow"] .vibe{color:#F0A500}
+.card[data-accent="yellow"] .page-link:hover{border-color:#F0A500;color:#F0A500}
+.card[data-accent="blue"] .vibe{color:#3498DB}
+.card[data-accent="blue"] .page-link:hover{border-color:#3498DB;color:#3498DB}
+.card[data-accent="gold"] .vibe{color:#B8860B}
+.card[data-accent="gold"] .page-link:hover{border-color:#B8860B;color:#B8860B}
+.card[data-accent="green"] .vibe{color:#6B8E23}
+.card[data-accent="green"] .page-link:hover{border-color:#6B8E23;color:#6B8E23}
+.card[data-accent="red"] .vibe{color:#CD5C5C}
+.card[data-accent="red"] .page-link:hover{border-color:#CD5C5C;color:#CD5C5C}
+
+/* FOOTER */
+footer{text-align:center;padding:50px 20px;border-top:1px solid #222;color:#555;font-size:.85rem}
+footer span{color:#F0A500}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  header h1{font-size:2rem}
+  .gallery{grid-template-columns:1fr;padding:0 15px}
+  .card-preview{height:200px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <h1>Строителни <span>Шаблони</span></h1>
+ <p>5 премиум многостранични уебсайта за строителни компании в България</p>
+ <div class="badge">Колекция А — 5 сайта × 5 страници</div>
+</header>
+
+<div class="gallery">
+
+ <!-- SITE 1 -->
+ <div class="card" data-accent="yellow">
+  <div class="card-number">01</div>
+  <div class="card-preview">
+   <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600" alt="ТитанСтрой">
+   <div class="card-overlay"><span class="vibe">Heavy Construction</span></div>
+  </div>
+  <div class="card-body">
+   <h3>ТитанСтрой</h3>
+   <p>Тежко строителство. Мощ, мащаб, безопасност. Диагонални секции, кран силует, жълти предупредителни ленти, анимирани броячи.</p>
+   <div class="palette">
+    <div class="swatch" style="background:#1C1C1C"></div>
+    <div class="swatch" style="background:#F0A500"></div>
+    <div class="swatch" style="background:#F5F5F5"></div>
+   </div>
+   <div class="pages">
+    <a href="site-1-heavy/index.html" class="page-link">Начало</a>
+    <a href="site-1-heavy/about.html" class="page-link">За нас</a>
+    <a href="site-1-heavy/services.html" class="page-link">Услуги</a>
+    <a href="site-1-heavy/portfolio.html" class="page-link">Портфолио</a>
+    <a href="site-1-heavy/contact.html" class="page-link">Контакти</a>
+   </div>
+  </div>
+ </div>
+
+ <!-- SITE 2 -->
+ <div class="card" data-accent="blue">
+  <div class="card-number">02</div>
+  <div class="card-preview">
+   <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600" alt="АрхиПлан">
+   <div class="card-overlay"><span class="vibe">Architectural Precision</span></div>
+  </div>
+  <div class="card-body">
+   <h3>АрхиПлан</h3>
+   <p>Архитектурна прецизност. Blueprint естетика, чисти линии. Решетъчен фон, технически чертежи, процесен стъпер.</p>
+   <div class="palette">
+    <div class="swatch" style="background:#2C3E50"></div>
+    <div class="swatch" style="background:#FFFFFF;border-color:#ccc"></div>
+    <div class="swatch" style="background:#3498DB"></div>
+   </div>
+   <div class="pages">
+    <a href="site-2-architect/index.html" class="page-link">Начало</a>
+    <a href="site-2-architect/about.html" class="page-link">За нас</a>
+    <a href="site-2-architect/services.html" class="page-link">Услуги</a>
+    <a href="site-2-architect/portfolio.html" class="page-link">Портфолио</a>
+    <a href="site-2-architect/contact.html" class="page-link">Контакти</a>
+   </div>
+  </div>
+ </div>
+
+ <!-- SITE 3 -->
+ <div class="card" data-accent="gold">
+  <div class="card-number">03</div>
+  <div class="card-preview">
+   <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="ПрестижСтрой">
+   <div class="card-overlay"><span class="vibe">Luxury Build</span></div>
+  </div>
+  <div class="card-body">
+   <h3>ПрестижСтрой</h3>
+   <p>Луксозно строителство. Премиум, ексклузивно. Мраморни текстури, златни акценти, тъмна тема с топли нюанси.</p>
+   <div class="palette">
+    <div class="swatch" style="background:#1A1A2E"></div>
+    <div class="swatch" style="background:#B8860B"></div>
+    <div class="swatch" style="background:#E8E2D6"></div>
+   </div>
+   <div class="pages">
+    <a href="site-3-luxury-build/index.html" class="page-link">Начало</a>
+    <a href="site-3-luxury-build/about.html" class="page-link">За нас</a>
+    <a href="site-3-luxury-build/services.html" class="page-link">Услуги</a>
+    <a href="site-3-luxury-build/portfolio.html" class="page-link">Портфолио</a>
+    <a href="site-3-luxury-build/contact.html" class="page-link">Контакти</a>
+   </div>
+  </div>
+ </div>
+
+ <!-- SITE 4 -->
+ <div class="card" data-accent="green">
+  <div class="card-number">04</div>
+  <div class="card-preview">
+   <img src="https://images.unsplash.com/photo-1518005068251-37900150dfca?w=600" alt="ЕкоДом">
+   <div class="card-overlay"><span class="vibe">Green Building</span></div>
+  </div>
+  <div class="card-body">
+   <h3>ЕкоДом</h3>
+   <p>Еко строителство. Устойчиво, зелено, енергийно ефективно. Пасивни къщи, зелени сертификати, дървесни текстури.</p>
+   <div class="palette">
+    <div class="swatch" style="background:#2D4A22"></div>
+    <div class="swatch" style="background:#C4A35A"></div>
+    <div class="swatch" style="background:#F0ECE3"></div>
+   </div>
+   <div class="pages">
+    <a href="site-4-green/index.html" class="page-link">Начало</a>
+    <a href="site-4-green/about.html" class="page-link">За нас</a>
+    <a href="site-4-green/services.html" class="page-link">Услуги</a>
+    <a href="site-4-green/portfolio.html" class="page-link">Портфолио</a>
+    <a href="site-4-green/contact.html" class="page-link">Контакти</a>
+   </div>
+  </div>
+ </div>
+
+ <!-- SITE 5 -->
+ <div class="card" data-accent="red">
+  <div class="card-number">05</div>
+  <div class="card-preview">
+   <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600" alt="Стоянови и Синове">
+   <div class="card-overlay"><span class="vibe">Family Business</span></div>
+  </div>
+  <div class="card-body">
+   <h3>Стоянови и Синове</h3>
+   <p>Семеен строителен бизнес. 3 поколения. Доверие, надеждност. Тухлена текстура, семейна история, общностни проекти.</p>
+   <div class="palette">
+    <div class="swatch" style="background:#8B2500"></div>
+    <div class="swatch" style="background:#F5DEB3"></div>
+    <div class="swatch" style="background:#FFFFFF;border-color:#ccc"></div>
+   </div>
+   <div class="pages">
+    <a href="site-5-family/index.html" class="page-link">Начало</a>
+    <a href="site-5-family/about.html" class="page-link">За нас</a>
+    <a href="site-5-family/services.html" class="page-link">Услуги</a>
+    <a href="site-5-family/portfolio.html" class="page-link">Портфолио</a>
+    <a href="site-5-family/contact.html" class="page-link">Контакти</a>
+   </div>
+  </div>
+ </div>
+
+</div>
+
+<footer>
+ <p>Колекция А — 5 премиум строителни шаблона × 5 страници = <span>25 HTML файла</span></p>
+ <p style="margin-top:8px">Всички шаблони са на български, с responsive дизайн, inline CSS, Google Fonts и scroll анимации.</p>
+</footer>
+
+</body>
+</html>

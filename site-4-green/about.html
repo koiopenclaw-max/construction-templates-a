@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>За нас - ЕкоДом | Устойчиво зелено строителство</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --forest: #2D4A22; --gold: #C4A35A; --clay: #F0ECE3; --forest-light: #3d6330; --forest-dark: #1e3217; --text: #2a2a2a; }
+        body { font-family: 'Libre Franklin', sans-serif; color: var(--text); background: var(--clay); overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Nunito', sans-serif; }
+
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(45,74,34,0.95); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; transition: box-shadow .3s; }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo svg { width: 36px; height: 36px; }
+        .logo span { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .logo small { color: var(--gold); font-size: .7rem; display: block; margin-top: -4px; font-weight: 400; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: .95rem; font-weight: 500; transition: color .3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--gold); border-radius: 2px; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: .3s; }
+
+        /* Page Header */
+        .page-header { padding: 140px 5% 70px; background: linear-gradient(135deg, rgba(45,74,34,0.9), rgba(30,50,23,0.93)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600') center/cover; color: #fff; text-align: center; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .page-header p { font-size: 1.1rem; opacity: .85; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .section { padding: 80px 5%; }
+        .section-header { text-align: center; max-width: 650px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--forest); margin-bottom: 15px; }
+        .section-header p { color: #666; line-height: 1.7; }
+        .leaf-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .leaf-divider svg { width: 22px; height: 22px; fill: var(--gold); }
+        .leaf-divider span { width: 40px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+        /* Mission */
+        .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; align-items: center; }
+        .mission-img { border-radius: 20px; overflow: hidden; position: relative; }
+        .mission-img img { width: 100%; height: 400px; object-fit: cover; }
+        .mission-img .eco-stamp { position: absolute; bottom: 20px; left: 20px; background: var(--forest); color: #fff; padding: 12px 20px; border-radius: 12px; font-size: .85rem; display: flex; align-items: center; gap: 8px; }
+        .mission-img .eco-stamp svg { width: 20px; height: 20px; fill: var(--gold); }
+        .mission-text h2 { font-size: 1.8rem; color: var(--forest); margin-bottom: 20px; }
+        .mission-text p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .mission-values { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        .value-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: #fff; border-radius: 10px; border-left: 3px solid var(--gold); }
+        .value-item svg { width: 20px; height: 20px; fill: var(--forest); flex-shrink: 0; }
+        .value-item span { font-size: .85rem; font-weight: 500; }
+
+        /* Timeline */
+        .timeline-section { background: linear-gradient(135deg, var(--forest), var(--forest-dark)); padding: 80px 5%; color: #fff; }
+        .timeline { max-width: 800px; margin: 0 auto; position: relative; padding-left: 40px; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: rgba(196,163,90,0.4); }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item::before { content: ''; position: absolute; left: -29px; top: 4px; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; border: 3px solid var(--forest-dark); }
+        .timeline-item .year { font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--gold); font-size: 1.2rem; margin-bottom: 5px; }
+        .timeline-item p { opacity: .8; font-size: .9rem; line-height: 1.6; }
+
+        /* Team */
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        .team-card { background: #fff; border-radius: 16px; overflow: hidden; text-align: center; transition: transform .3s, box-shadow .3s; }
+        .team-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(45,74,34,0.12); }
+        .team-photo { height: 250px; overflow: hidden; position: relative; }
+        .team-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .team-photo::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to top, #fff, transparent); }
+        .team-info { padding: 20px; }
+        .team-info h3 { color: var(--forest); font-size: 1.1rem; margin-bottom: 4px; }
+        .team-info .role { color: var(--gold); font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .team-info p { font-size: .82rem; color: #777; line-height: 1.5; }
+
+        /* Certifications */
+        .cert-section { background: linear-gradient(135deg, #8B7355 0%, #A0896C 25%, #8B7355 50%, #7A6548 75%, #8B7355 100%); padding: 80px 5%; position: relative; }
+        .cert-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(0,0,0,0.02) 8px, rgba(0,0,0,0.02) 10px); }
+        .cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+        .cert-card { background: rgba(255,255,255,0.95); border-radius: 16px; padding: 35px 25px; text-align: center; transition: transform .3s; }
+        .cert-card:hover { transform: translateY(-5px); }
+        .cert-icon { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--forest), var(--forest-light)); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+        .cert-icon svg { width: 32px; height: 32px; fill: #fff; }
+        .cert-card h3 { color: var(--forest); font-size: 1.1rem; margin-bottom: 8px; }
+        .cert-card p { font-size: .82rem; color: #666; line-height: 1.5; }
+        .cert-card .cert-level { display: inline-block; margin-top: 12px; background: var(--forest); color: var(--gold); padding: 4px 14px; border-radius: 20px; font-size: .75rem; font-weight: 700; }
+
+        /* Partners */
+        .partners-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; max-width: 1000px; margin: 0 auto; }
+        .partner { background: #fff; border-radius: 12px; padding: 25px 35px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .partner-icon { width: 50px; height: 50px; background: var(--forest); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .partner-icon svg { width: 24px; height: 24px; fill: var(--gold); }
+        .partner h4 { font-size: .95rem; color: var(--forest); }
+        .partner p { font-size: .75rem; color: #888; }
+
+        footer { background: var(--forest-dark); color: rgba(255,255,255,0.8); padding: 60px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: .85rem; line-height: 1.7; margin-top: 15px; opacity: .7; }
+        footer h4 { font-family: 'Nunito', sans-serif; color: var(--gold); margin-bottom: 18px; font-size: .95rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: .85rem; transition: color .3s; }
+        footer ul a:hover { color: var(--gold); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: .8rem; opacity: .6; max-width: 1200px; margin: 0 auto; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 70px; left: 0; width: 100%; background: var(--forest); flex-direction: column; padding: 20px 5%; gap: 15px; transform: translateY(-120%); transition: transform .3s; }
+            .nav-links.open { transform: translateY(0); }
+            .page-header h1 { font-size: 2rem; }
+            .mission-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .cert-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="index.html" class="logo">
+        <svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+        <span>ЕкоДом<small>GREEN BUILDING</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html" class="active">За нас</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="portfolio.html">Портфолио</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<section class="page-header">
+    <h1>За ЕкоДом</h1>
+    <p>От 2012 година изграждаме устойчивото бъдеще на българското строителство с отговорност към природата и хората.</p>
+</section>
+
+<!-- Mission -->
+<section class="section">
+    <div class="mission-grid">
+        <div class="mission-img fade-up">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800" alt="Устойчиво строителство">
+            <div class="eco-stamp">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Въглеродно неутрални от 2020
+            </div>
+        </div>
+        <div class="mission-text fade-up">
+            <h2>Нашата мисия за устойчиво строителство</h2>
+            <p>ЕкоДом е основана с убеждението, че всяка нова сграда трябва да бъде в хармония с природата. Ние проектираме и изграждаме жилища и търговски обекти, които консумират минимална енергия, използват екологични материали и осигуряват здравословна среда за обитаване.</p>
+            <p>С екип от 32 специалисти — архитекти, инженери и сертифицирани енергийни одитори — ние превръщаме зеленото строителство в достъпна реалност за всеки български дом.</p>
+            <div class="mission-values">
+                <div class="value-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg>
+                    <span>Екологичност</span>
+                </div>
+                <div class="value-item">
+                    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>Ефективност</span>
+                </div>
+                <div class="value-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+                    <span>Иновации</span>
+                </div>
+                <div class="value-item">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                    <span>Грижа за хората</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline-section">
+    <div class="section-header fade-up" style="color:#fff">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2 style="color:#fff">Нашият път</h2>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item fade-up">
+            <div class="year">2012</div>
+            <p>Основаване на ЕкоДом от арх. Димитър Зелков с визията за достъпно зелено строителство в България.</p>
+        </div>
+        <div class="timeline-item fade-up">
+            <div class="year">2015</div>
+            <p>Завършване на първата сертифицирана пасивна къща в София. Получаване на BREEAM акредитация.</p>
+        </div>
+        <div class="timeline-item fade-up">
+            <div class="year">2018</div>
+            <p>100-ен зелен проект. Партньорство с международни доставчици на еко материали. LEED сертификация на екипа.</p>
+        </div>
+        <div class="timeline-item fade-up">
+            <div class="year">2020</div>
+            <p>Постигане на пълна въглеродна неутралност на компанията. Старт на програмата „Зелен дом за всеки".</p>
+        </div>
+        <div class="timeline-item fade-up">
+            <div class="year">2024</div>
+            <p>180+ завършени проекта. Разширяване в Пловдив и Варна. Признание за най-зелена строителна компания в България.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Team -->
+<section class="section">
+    <div class="section-header fade-up">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2>Нашият екип</h2>
+        <p>Запознайте се с лидерите, които превръщат зеленото строителство в реалност.</p>
+    </div>
+    <div class="team-grid">
+        <div class="team-card fade-up">
+            <div class="team-photo"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="Димитър Зелков"></div>
+            <div class="team-info">
+                <h3>арх. Димитър Зелков</h3>
+                <div class="role">Основател и управител</div>
+                <p>20+ години опит в устойчивото строителство. Сертифициран Passive House Designer.</p>
+            </div>
+        </div>
+        <div class="team-card fade-up">
+            <div class="team-photo"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400" alt="Мария Горанова"></div>
+            <div class="team-info">
+                <h3>инж. Мария Горанова</h3>
+                <div class="role">Главен инженер</div>
+                <p>Специалист по енергийна ефективност и HVAC системи. LEED AP сертификат.</p>
+            </div>
+        </div>
+        <div class="team-card fade-up">
+            <div class="team-photo"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400" alt="Петър Листов"></div>
+            <div class="team-info">
+                <h3>арх. Петър Листов</h3>
+                <div class="role">Водещ архитект</div>
+                <p>Магистър от TU Darmstadt. Проектира пасивни къщи и зелени офис сгради.</p>
+            </div>
+        </div>
+        <div class="team-card fade-up">
+            <div class="team-photo"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400" alt="Елена Борисова"></div>
+            <div class="team-info">
+                <h3>Елена Борисова</h3>
+                <div class="role">Еко консултант</div>
+                <p>BREEAM Assessor. Отговаря за сертификациите и устойчивите материали.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certifications -->
+<section class="cert-section">
+    <div class="section-header fade-up" style="color:#fff; position:relative; z-index:1;">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2 style="color:#fff">Зелени сертификации</h2>
+        <p style="color:rgba(255,255,255,0.8)">Нашите международно признати акредитации гарантират най-високи стандарти.</p>
+    </div>
+    <div class="cert-grid">
+        <div class="cert-card fade-up">
+            <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <h3>LEED</h3>
+            <p>Leadership in Energy and Environmental Design. Глобален стандарт за зелени сгради.</p>
+            <span class="cert-level">Gold Certified</span>
+        </div>
+        <div class="cert-card fade-up">
+            <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 12l3 3 5-5" fill="none" stroke="#fff" stroke-width="2"/></svg></div>
+            <h3>BREEAM</h3>
+            <p>Building Research Establishment Environmental Assessment Method. Водещ британски стандарт.</p>
+            <span class="cert-level">Very Good</span>
+        </div>
+        <div class="cert-card fade-up">
+            <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14"/></svg></div>
+            <h3>Passive House</h3>
+            <p>Международен стандарт за пасивни къщи на Passive House Institute, Германия.</p>
+            <span class="cert-level">Certified Designer</span>
+        </div>
+        <div class="cert-card fade-up">
+            <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div>
+            <h3>EPC A+ Rating</h3>
+            <p>Всички наши сгради постигат енергиен клас A+ по европейската скала за ефективност.</p>
+            <span class="cert-level">A+ Standard</span>
+        </div>
+    </div>
+</section>
+
+<!-- Partners -->
+<section class="section">
+    <div class="section-header fade-up">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2>Партньори по еко материали</h2>
+        <p>Работим с водещи международни доставчици на устойчиви строителни материали.</p>
+    </div>
+    <div class="partners-row">
+        <div class="partner fade-up">
+            <div class="partner-icon"><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg></div>
+            <div><h4>EcoTimber DE</h4><p>Сертифицирана FSC дървесина</p></div>
+        </div>
+        <div class="partner fade-up">
+            <div class="partner-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><h4>SolarTech AT</h4><p>Соларни панели и системи</p></div>
+        </div>
+        <div class="partner fade-up">
+            <div class="partner-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <div><h4>GreenInsul CH</h4><p>Натурална изолация</p></div>
+        </div>
+        <div class="partner fade-up">
+            <div class="partner-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14"/></svg></div>
+            <div><h4>PassivHaus DK</h4><p>Прозорци и врати за пасивни къщи</p></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+                <span>ЕкоДом</span>
+            </a>
+            <p>Водеща компания за устойчиво и зелено строителство в България от 2012 година.</p>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul>
+        </div>
+        <div>
+            <h4>Услуги</h4>
+            <ul><li><a href="services.html">Пасивни къщи</a></li><li><a href="services.html">Зелени ремонти</a></li><li><a href="services.html">Соларни системи</a></li><li><a href="services.html">Зелени покриви</a></li></ul>
+        </div>
+        <div>
+            <h4>Контакти</h4>
+            <ul><li><a href="tel:+35928461122">+359 2 846 1122</a></li><li><a href="mailto:info@ekodom.bg">info@ekodom.bg</a></li><li><a href="#">ул. Шипка 34, 1504 София</a></li></ul>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 ЕкоДом ЕООД. Всички права запазени.</div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио - ЕкоДом | Завършени зелени проекти</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --forest: #2D4A22; --gold: #C4A35A; --clay: #F0ECE3; --forest-light: #3d6330; --forest-dark: #1e3217; --text: #2a2a2a; }
+        body { font-family: 'Libre Franklin', sans-serif; color: var(--text); background: var(--clay); overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Nunito', sans-serif; }
+
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(45,74,34,0.95); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; transition: box-shadow .3s; }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo svg { width: 36px; height: 36px; }
+        .logo span { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .logo small { color: var(--gold); font-size: .7rem; display: block; margin-top: -4px; font-weight: 400; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: .95rem; font-weight: 500; transition: color .3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--gold); border-radius: 2px; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: .3s; }
+
+        .page-header { padding: 140px 5% 70px; background: linear-gradient(135deg, rgba(45,74,34,0.9), rgba(30,50,23,0.93)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600') center/cover; color: #fff; text-align: center; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .page-header p { font-size: 1.1rem; opacity: .85; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .section { padding: 80px 5%; }
+        .section-header { text-align: center; max-width: 650px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--forest); margin-bottom: 15px; }
+        .section-header p { color: #666; line-height: 1.7; }
+        .leaf-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .leaf-divider svg { width: 22px; height: 22px; fill: var(--gold); }
+        .leaf-divider span { width: 40px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+        /* Filters */
+        .filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+        .filter-btn { padding: 10px 24px; border: 2px solid var(--forest); background: transparent; color: var(--forest); border-radius: 50px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .9rem; cursor: pointer; transition: all .3s; }
+        .filter-btn:hover, .filter-btn.active { background: var(--forest); color: var(--gold); }
+
+        /* Portfolio Grid */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .project-card { border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid rgba(45,74,34,0.08); transition: all .4s; }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(45,74,34,0.12); }
+        .project-card-img { position: relative; overflow: hidden; height: 240px; }
+        .project-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+        .project-card:hover .project-card-img img { transform: scale(1.08); }
+        .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,74,34,0.85), transparent 60%); opacity: 0; transition: opacity .4s; display: flex; align-items: flex-end; padding: 20px; }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .project-overlay span { color: var(--gold); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .9rem; }
+        .energy-tag { position: absolute; top: 15px; right: 15px; background: var(--gold); color: var(--forest-dark); padding: 4px 12px; border-radius: 20px; font-size: .75rem; font-weight: 700; letter-spacing: .5px; }
+        .project-card-body { padding: 24px; }
+        .project-type { display: inline-block; background: rgba(45,74,34,0.1); color: var(--forest); padding: 4px 12px; border-radius: 20px; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .project-card h3 { font-size: 1.15rem; color: var(--forest); margin-bottom: 8px; }
+        .project-card p { color: #666; font-size: .9rem; line-height: 1.6; }
+        .project-meta { display: flex; gap: 16px; margin-top: 12px; font-size: .8rem; color: #888; }
+        .project-meta span { display: flex; align-items: center; gap: 6px; }
+        .project-meta svg { width: 14px; height: 14px; fill: var(--gold); }
+
+        /* Stats */
+        .stats-section { background: linear-gradient(135deg, var(--forest), var(--forest-dark)); padding: 70px 5%; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 1000px; margin: 0 auto; }
+        .stat-item { text-align: center; color: #fff; padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.1); }
+        .stat-item:last-child { border-right: none; }
+        .stat-item .number { font-family: 'Nunito', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--gold); }
+        .stat-item p { font-size: .85rem; opacity: .8; margin-top: 5px; }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, #8B7355 0%, #A0896C 25%, #8B7355 50%, #7A6548 75%, #8B7355 100%); padding: 70px 5%; text-align: center; color: #fff; position: relative; }
+        .cta-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(0,0,0,0.02) 8px, rgba(0,0,0,0.02) 10px); }
+        .cta-section > * { position: relative; z-index: 1; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 15px; }
+        .cta-section p { opacity: .85; max-width: 550px; margin: 0 auto 30px; line-height: 1.7; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .95rem; transition: all .3s; border: none; cursor: pointer; }
+        .btn-primary { background: var(--gold); color: var(--forest-dark); }
+        .btn-primary:hover { background: #d4b36a; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196,163,90,0.4); }
+
+        footer { background: var(--forest-dark); color: rgba(255,255,255,0.8); padding: 60px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: .85rem; line-height: 1.7; margin-top: 15px; opacity: .7; }
+        footer h4 { font-family: 'Nunito', sans-serif; color: var(--gold); margin-bottom: 18px; font-size: .95rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: .85rem; transition: color .3s; }
+        footer ul a:hover { color: var(--gold); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: .8rem; opacity: .6; max-width: 1200px; margin: 0 auto; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 70px; left: 0; width: 100%; background: var(--forest); flex-direction: column; padding: 20px 5%; gap: 15px; transform: translateY(-120%); transition: transform .3s; }
+            .nav-links.open { transform: translateY(0); }
+            .page-header h1 { font-size: 2rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="index.html" class="logo">
+        <svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+        <span>ЕкоДом<small>GREEN BUILDING</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нас</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="portfolio.html" class="active">Портфолио</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<section class="page-header">
+    <h1>Нашето портфолио</h1>
+    <p>Над 120 завършени зелени проекта — от пасивни къщи до мащабни енергийни реконструкции. Всеки проект е стъпка към по-устойчиво бъдеще.</p>
+</section>
+
+<section class="section">
+    <div class="section-header fade-up">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2>Завършени проекти</h2>
+        <p>Всеки обект е проектиран и изпълнен с мисъл за енергийна ефективност, комфорт и минимален екологичен отпечатък.</p>
+    </div>
+
+    <div class="filters fade-up">
+        <button class="filter-btn active" onclick="filterProjects('all', this)">Всички</button>
+        <button class="filter-btn" onclick="filterProjects('пасивна')">Пасивни къщи</button>
+        <button class="filter-btn" onclick="filterProjects('реконструкция')">Реконструкции</button>
+        <button class="filter-btn" onclick="filterProjects('соларен')">Соларни системи</button>
+        <button class="filter-btn" onclick="filterProjects('интериор')">Еко интериори</button>
+    </div>
+
+    <div class="portfolio-grid">
+        <div class="project-card fade-up" data-type="пасивна">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Пасивна къща Витоша">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">A+ клас</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Пасивна къща</span>
+                <h3>Вила &bdquo;Витоша Грийн&ldquo;</h3>
+                <p>Сертифицирана пасивна къща в полите на Витоша с рекуператорна система и тройни стъклопакети. Годишна потребност от отопление — едва 12 kWh/m&sup2;.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> София</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 285 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="реконструкция">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600" alt="Реконструкция панелен блок">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">E &rarr; B+</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Реконструкция</span>
+                <h3>Блок 47, ж.к. &bdquo;Младост 1&ldquo;</h3>
+                <p>Дълбока енергийна реконструкция на 8-етажен панелен блок — нова фасадна изолация, дограма, термопомпи и соларна система за БГВ.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> София</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 4,200 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="пасивна">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Еко къща Банкя">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">A+ клас</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Пасивна къща</span>
+                <h3>Къща &bdquo;Банкя Еко&ldquo;</h3>
+                <p>Семейна къща от дървесна конструкция с целулозна изолация и зелен покрив. Интегрирана дъждовна система за поливане на градината.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Банкя</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 195 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="соларен">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600" alt="Соларна система Пловдив">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">SOLAR</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Соларна система</span>
+                <h3>Производствена база &bdquo;ТехноПарк&ldquo;</h3>
+                <p>Монтаж на 120 kWp фотоволтаична система на покрива на производствен цех. Net metering с пълно покритие на дневното потребление.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Пловдив</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 3,500 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="интериор">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600" alt="Еко интериор офис">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">ECO</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Еко интериор</span>
+                <h3>Офис &bdquo;GreenTech Hub&ldquo;</h3>
+                <p>Биофилен интериорен дизайн на коуъркинг пространство — FSC дървесина, рециклирани метали, жива зелена стена и естествено осветление.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> София</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 450 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="реконструкция">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Административна сграда Варна">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">D &rarr; A</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Реконструкция</span>
+                <h3>Административна сграда &bdquo;Морски&ldquo;</h3>
+                <p>Пълна енергийна реконструкция на офис сграда от 80-те — нова вентилационна фасада, LED осветление, термопомпа въздух-вода.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Варна</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 2,800 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="пасивна">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600" alt="Пасивна къща Бояна">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">A+ клас</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Пасивна къща</span>
+                <h3>Резиденция &bdquo;Бояна Хилс&ldquo;</h3>
+                <p>Луксозна пасивна вила с геотермална помпа, автоматизирано управление на микроклимата и покривна фотоволтаична система 15 kWp.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> София</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 380 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card fade-up" data-type="соларен">
+            <div class="project-card-img">
+                <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=600" alt="Зелен покрив хотел">
+                <div class="project-overlay"><span>Виж детайли &rarr;</span></div>
+                <span class="energy-tag">GREEN ROOF</span>
+            </div>
+            <div class="project-card-body">
+                <span class="project-type">Зелен покрив</span>
+                <h3>Хотел &bdquo;Рила Грийн&ldquo;</h3>
+                <p>Изграждане на екстензивен зелен покрив с интегрирана соларна система на бутиков планински хотел. 40% намаление на разходите за климатизация.</p>
+                <div class="project-meta">
+                    <span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Боровец</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg> 1,200 m&sup2;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-section">
+    <div class="stats-grid fade-up">
+        <div class="stat-item">
+            <div class="number">120+</div>
+            <p>завършени проекта</p>
+        </div>
+        <div class="stat-item">
+            <div class="number">35</div>
+            <p>пасивни къщи</p>
+        </div>
+        <div class="stat-item">
+            <div class="number">2.4 MW</div>
+            <p>инсталирана соларна мощност</p>
+        </div>
+        <div class="stat-item">
+            <div class="number">68%</div>
+            <p>средно енергийно спестяване</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="fade-up">
+        <h2>Искате вашият проект да е тук?</h2>
+        <p>Свържете се с нас за безплатна консултация и оценка на потенциала за устойчиво строителство на вашия обект.</p>
+        <a href="contact.html" class="btn btn-primary">Заявете консултация</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+                <span>ЕкоДом</span>
+            </a>
+            <p>Водеща компания за устойчиво и зелено строителство в България от 2012 година.</p>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul>
+        </div>
+        <div>
+            <h4>Услуги</h4>
+            <ul><li><a href="#">Пасивни къщи</a></li><li><a href="#">Зелени ремонти</a></li><li><a href="#">Соларни системи</a></li><li><a href="#">Зелени покриви</a></li></ul>
+        </div>
+        <div>
+            <h4>Контакти</h4>
+            <ul><li><a href="tel:+35928461122">+359 2 846 1122</a></li><li><a href="mailto:info@ekodom.bg">info@ekodom.bg</a></li><li><a href="#">ул. Шипка 34, 1504 София</a></li></ul>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 ЕкоДом ЕООД. Всички права запазени.</div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+
+    function filterProjects(type, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        (btn || event.target).classList.add('active');
+        document.querySelectorAll('.project-card').forEach(card => {
+            if (type === 'all' || card.dataset.type === type) {
+                card.style.display = 'block';
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => { card.style.display = 'none'; }, 400);
+            }
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

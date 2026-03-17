@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио - АрхиПлан</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2C3E50;--white:#FFFFFF;--accent:#3498DB;--light:#ECF0F1;--dark:#1A252F}
+body{font-family:'Work Sans',sans-serif;color:var(--blue);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Saira',sans-serif;font-weight:700}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+nav{position:fixed;top:0;left:0;width:100%;background:rgba(44,62,80,.97);backdrop-filter:blur(8px);z-index:1000;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
+nav .logo{font-family:'Saira',sans-serif;font-size:1.6rem;color:var(--white);font-weight:700;letter-spacing:1px}
+nav .logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:30px}
+nav ul li a{color:rgba(255,255,255,.8);font-size:.95rem;font-weight:500;transition:color .3s;position:relative}
+nav ul li a:hover,nav ul li a.active{color:var(--accent)}
+nav ul li a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:26px;height:2px;background:var(--white);transition:.3s}
+
+.page-header{padding:140px 0 80px;background:var(--blue);text-align:center;color:var(--white);position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.08) 1px,transparent 1px);background-size:40px 40px}
+.page-header h1{font-size:2.8rem;position:relative;z-index:1}
+.page-header p{margin-top:12px;opacity:.7;font-size:1.05rem;position:relative;z-index:1}
+
+/* FILTERS */
+.filters{padding:50px 0 20px;text-align:center}
+.filter-btn{display:inline-block;padding:10px 24px;margin:5px;border:2px solid #e0e6ed;border-radius:30px;font-family:'Saira',sans-serif;font-size:.9rem;font-weight:600;color:var(--blue);background:var(--white);cursor:pointer;transition:all .3s}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);color:var(--white);border-color:var(--accent)}
+
+/* PORTFOLIO GRID */
+.portfolio{padding:40px 0 100px}
+.portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.project-card{border-radius:8px;overflow:hidden;position:relative;height:300px;cursor:pointer;transition:transform .3s}
+.project-card.hidden{display:none}
+.project-card:hover{transform:translateY(-4px)}
+.project-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.project-card:hover img{transform:scale(1.1)}
+.project-card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,62,80,.95) 0%,rgba(44,62,80,.4) 40%,transparent 70%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:25px;color:var(--white)}
+.project-card:hover .overlay{opacity:1}
+.project-card .overlay h3{font-size:1.1rem;margin-bottom:4px;transform:translateY(10px);transition:transform .4s}
+.project-card:hover .overlay h3{transform:translateY(0)}
+.project-card .overlay .cat{font-size:.82rem;color:var(--accent);font-weight:500;transform:translateY(10px);transition:transform .4s .05s}
+.project-card:hover .overlay .cat{transform:translateY(0)}
+.project-card .overlay .desc{font-size:.83rem;color:rgba(255,255,255,.75);margin-top:8px;line-height:1.5;transform:translateY(10px);transition:transform .4s .1s}
+.project-card:hover .overlay .desc{transform:translateY(0)}
+
+/* BEFORE/AFTER SLIDER */
+.ba-section{padding:80px 0;background:var(--light);position:relative}
+.ba-section::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.03) 1px,transparent 1px);background-size:30px 30px;pointer-events:none}
+.section-header{text-align:center;margin-bottom:60px;position:relative;z-index:1}
+.section-header h2{font-size:2.4rem;color:var(--blue);margin-bottom:12px}
+.section-header .line{width:60px;height:3px;background:var(--accent);margin:0 auto 15px}
+.section-header p{color:#7f8c8d;font-size:1.05rem;max-width:550px;margin:0 auto}
+.ba-container{max-width:800px;margin:0 auto;position:relative;overflow:hidden;border-radius:8px;aspect-ratio:16/9;z-index:1;box-shadow:0 15px 50px rgba(44,62,80,.15)}
+.ba-container img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.ba-after{clip-path:inset(0 50% 0 0)}
+.ba-slider{position:absolute;top:0;left:50%;width:4px;height:100%;background:var(--accent);cursor:ew-resize;z-index:10;transform:translateX(-50%)}
+.ba-slider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:var(--accent);border-radius:50%;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.ba-slider::after{content:'\2194';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--white);font-size:1.2rem;font-weight:700;z-index:11}
+.ba-label{position:absolute;bottom:15px;padding:6px 16px;background:rgba(44,62,80,.85);color:var(--white);font-family:'Saira',sans-serif;font-size:.85rem;border-radius:4px;z-index:5}
+.ba-label.before{left:15px}
+.ba-label.after{right:15px}
+
+/* STATS BAR */
+.stats-bar{padding:60px 0;background:var(--blue);color:var(--white)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+.stats-row .num{font-family:'Saira',sans-serif;font-size:2.5rem;font-weight:700;color:var(--accent)}
+.stats-row .lbl{font-size:.9rem;opacity:.7;margin-top:5px}
+
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col h4{font-family:'Saira',sans-serif;color:var(--white);font-size:1.1rem;margin-bottom:18px}
+.footer-col p,.footer-col a{font-size:.9rem;line-height:1.9;display:block;color:rgba(255,255,255,.6);transition:color .3s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:25px;text-align:center;font-size:.85rem}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:968px){
+  .portfolio-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:20px}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  nav ul{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--dark);flex-direction:column;padding:80px 40px;gap:25px;transition:right .3s}
+  nav ul.open{right:0}
+  .portfolio-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .page-header h1{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Архи<span>План</span></a>
+  <ul id="navMenu">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html">За нас</a></li>
+    <li><a href="services.html">Услуги</a></li>
+    <li><a href="portfolio.html" class="active">Портфолио</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>Портфолио</h1>
+  <p>Над 350 успешно реализирани проекта в цяла България</p>
+</section>
+
+<section class="filters fade-up">
+  <div class="container">
+    <button class="filter-btn active" data-filter="all">Всички</button>
+    <button class="filter-btn" data-filter="жилищни">Жилищни</button>
+    <button class="filter-btn" data-filter="търговски">Търговски</button>
+    <button class="filter-btn" data-filter="промишлени">Промишлени</button>
+    <button class="filter-btn" data-filter="реконструкции">Реконструкции</button>
+  </div>
+</section>
+
+<section class="portfolio">
+  <div class="container">
+    <div class="portfolio-grid">
+
+      <div class="project-card fade-up" data-category="жилищни">
+        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=400&fit=crop" alt="Резиденция Витоша">
+        <div class="overlay">
+          <h3>Резиденция Витоша</h3>
+          <div class="cat">Жилищен комплекс</div>
+          <div class="desc">Жилищна сграда с 24 апартамента в подножието на Витоша. Завършена 2024.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="търговски">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=400&fit=crop" alt="Бизнес център Сердика">
+        <div class="overlay">
+          <h3>Бизнес център Сердика</h3>
+          <div class="cat">Търговски обект</div>
+          <div class="desc">Модерен офис комплекс от клас А с 8 етажа и подземен паркинг.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="жилищни">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=400&fit=crop" alt="Къща Бояна">
+        <div class="overlay">
+          <h3>Къща Бояна</h3>
+          <div class="cat">Еднофамилна къща</div>
+          <div class="desc">Модерна къща с 320 м2 РЗП, басейн и озеленен двор.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="промишлени">
+        <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=500&h=400&fit=crop" alt="Логистичен център Пловдив">
+        <div class="overlay">
+          <h3>Логистичен център Пловдив</h3>
+          <div class="cat">Промишлен обект</div>
+          <div class="desc">Складова база от 5000 м2 с модерна логистична инфраструктура.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="реконструкции">
+        <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=500&h=400&fit=crop" alt="Хотел Централ">
+        <div class="overlay">
+          <h3>Хотел Централ</h3>
+          <div class="cat">Реконструкция</div>
+          <div class="desc">Пълна реконструкция на историческа сграда от 1920г. в центъра на София.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="търговски">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=400&fit=crop" alt="Офис парк Младост">
+        <div class="overlay">
+          <h3>Офис парк Младост</h3>
+          <div class="cat">Търговски обект</div>
+          <div class="desc">Комплекс от три офис сгради с общо 12 000 м2 отдаваема площ.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="жилищни">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500&h=400&fit=crop" alt="Вила Созопол">
+        <div class="overlay">
+          <h3>Вила Созопол</h3>
+          <div class="cat">Ваканционна къща</div>
+          <div class="desc">Луксозна вила на морския бряг с панорамен изглед и безкрайн басейн.</div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="промишлени">
+        <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=500&h=400&fit=crop" alt="Производствена база Стара Загора">
+        <div class="overlay">
+          <h3>Производствена база Стара Загора</h3>
+          <div class="cat">Промишлен обект</div>
+          <div class="desc">Производствен цех от 3200 м2 с административна част и складове.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="ba-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="line"></div>
+      <h2>Преди и след</h2>
+      <p>Плъзнете, за да видите трансформацията</p>
+    </div>
+    <div class="ba-container fade-up" id="baSlider">
+      <img src="https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=800&h=450&fit=crop" alt="Преди" class="ba-before">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=450&fit=crop" alt="След" class="ba-after">
+      <div class="ba-slider" id="slider"></div>
+      <span class="ba-label before">Преди</span>
+      <span class="ba-label after">След</span>
+    </div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-row fade-up">
+      <div><div class="num">350+</div><div class="lbl">Завършени проекта</div></div>
+      <div><div class="num">120+</div><div class="lbl">Жилищни обекти</div></div>
+      <div><div class="num">85+</div><div class="lbl">Търговски обекти</div></div>
+      <div><div class="num">45+</div><div class="lbl">Реконструкции</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>АрхиПлан</h4>
+        <p>Проектиране и строителство с прецизност от 2010 година. Вашият надежден партньор за всеки строителен проект в България.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="index.html">Начало</a>
+        <a href="about.html">За нас</a>
+        <a href="services.html">Услуги</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="contact.html">Контакти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="services.html">Ново строителство</a>
+        <a href="services.html">Ремонти</a>
+        <a href="services.html">Реконструкции</a>
+        <a href="services.html">Интериорен дизайн</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <p>ул. Алабин 50, 1000 София</p>
+        <p>+359 2 811 2233</p>
+        <p>info@archiplan.bg</p>
+        <p>Пон-Пет: 08:00 - 18:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 АрхиПлан ЕООД. Всички права запазени.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Fade-up observer
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// Filter functionality
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card=>{
+      if(filter==='all'||card.dataset.category===filter){
+        card.classList.remove('hidden');
+      }else{
+        card.classList.add('hidden');
+      }
+    });
+  });
+});
+
+// Before/After slider
+const baContainer=document.getElementById('baSlider');
+const slider=document.getElementById('slider');
+const afterImg=baContainer.querySelector('.ba-after');
+let isDragging=false;
+
+function updateSlider(x){
+  const rect=baContainer.getBoundingClientRect();
+  let pos=((x-rect.left)/rect.width)*100;
+  pos=Math.max(5,Math.min(95,pos));
+  slider.style.left=pos+'%';
+  afterImg.style.clipPath=`inset(0 ${100-pos}% 0 0)`;
+}
+
+slider.addEventListener('mousedown',()=>isDragging=true);
+document.addEventListener('mouseup',()=>isDragging=false);
+document.addEventListener('mousemove',e=>{if(isDragging)updateSlider(e.clientX)});
+slider.addEventListener('touchstart',()=>isDragging=true);
+document.addEventListener('touchend',()=>isDragging=false);
+document.addEventListener('touchmove',e=>{if(isDragging)updateSlider(e.touches[0].clientX)});
+</script>
+</body>
+</html>

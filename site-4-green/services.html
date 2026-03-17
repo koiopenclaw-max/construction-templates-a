@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги - ЕкоДом | Зелено строителство и енергийна ефективност</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --forest: #2D4A22; --gold: #C4A35A; --clay: #F0ECE3; --forest-light: #3d6330; --forest-dark: #1e3217; --text: #2a2a2a; }
+        body { font-family: 'Libre Franklin', sans-serif; color: var(--text); background: var(--clay); overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Nunito', sans-serif; }
+
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(45,74,34,0.95); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; transition: box-shadow .3s; }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo svg { width: 36px; height: 36px; }
+        .logo span { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .logo small { color: var(--gold); font-size: .7rem; display: block; margin-top: -4px; font-weight: 400; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: .95rem; font-weight: 500; transition: color .3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: var(--gold); border-radius: 2px; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: .3s; }
+
+        .page-header { padding: 140px 5% 70px; background: linear-gradient(135deg, rgba(45,74,34,0.9), rgba(30,50,23,0.93)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600') center/cover; color: #fff; text-align: center; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .page-header p { font-size: 1.1rem; opacity: .85; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .section { padding: 80px 5%; }
+        .section-header { text-align: center; max-width: 650px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--forest); margin-bottom: 15px; }
+        .section-header p { color: #666; line-height: 1.7; }
+        .leaf-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .leaf-divider svg { width: 22px; height: 22px; fill: var(--gold); }
+        .leaf-divider span { width: 40px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+        /* Service Blocks */
+        .service-block { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto 60px; align-items: center; }
+        .service-block.reverse { direction: rtl; }
+        .service-block.reverse > * { direction: ltr; }
+        .service-img { border-radius: 20px; overflow: hidden; height: 350px; position: relative; }
+        .service-img img { width: 100%; height: 100%; object-fit: cover; }
+        .service-img .rating-badge { position: absolute; top: 15px; left: 15px; background: var(--forest); color: #fff; padding: 8px 16px; border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 600; }
+        .service-img .rating-badge .grade { color: var(--gold); font-size: 1.2rem; font-weight: 800; }
+        .service-content h3 { font-size: 1.6rem; color: var(--forest); margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+        .service-content h3 .num { background: var(--gold); color: var(--forest-dark); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+        .service-content p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .service-features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .service-features li { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: #555; }
+        .service-features li svg { width: 16px; height: 16px; fill: var(--gold); flex-shrink: 0; }
+
+        /* Passive House Section */
+        .passive-section { background: linear-gradient(135deg, var(--forest), var(--forest-dark)); padding: 80px 5%; color: #fff; }
+        .passive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        .passive-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 35px 25px; text-align: center; transition: all .3s; }
+        .passive-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-5px); }
+        .passive-card svg { width: 40px; height: 40px; fill: var(--gold); margin-bottom: 15px; }
+        .passive-card h3 { font-size: 1.05rem; margin-bottom: 10px; }
+        .passive-card p { font-size: .85rem; opacity: .75; line-height: 1.6; }
+        .passive-card .value { font-size: 1.8rem; font-weight: 800; color: var(--gold); margin-top: 10px; }
+
+        /* Energy Ratings */
+        .energy-section { background: linear-gradient(135deg, #8B7355 0%, #A0896C 25%, #8B7355 50%, #7A6548 75%, #8B7355 100%); padding: 80px 5%; position: relative; }
+        .energy-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(0,0,0,0.02) 8px, rgba(0,0,0,0.02) 10px); }
+        .energy-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+        .energy-scale { display: flex; flex-direction: column; gap: 8px; margin-top: 30px; }
+        .energy-bar { display: flex; align-items: center; gap: 15px; }
+        .energy-bar .label { width: 35px; font-weight: 800; font-size: 1.1rem; color: #fff; text-align: center; }
+        .energy-bar .bar { height: 38px; border-radius: 0 20px 20px 0; display: flex; align-items: center; padding: 0 15px; font-size: .8rem; font-weight: 600; color: #fff; transition: width 1s ease; }
+        .energy-bar .desc { font-size: .8rem; color: rgba(255,255,255,0.7); margin-left: 10px; }
+        .energy-bar.highlight .bar { box-shadow: 0 0 20px rgba(196,163,90,0.5); }
+        .energy-bar.highlight .label { color: var(--gold); font-size: 1.3rem; }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, var(--forest), var(--forest-dark)); padding: 70px 5%; text-align: center; color: #fff; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 15px; }
+        .cta-section p { opacity: .85; max-width: 550px; margin: 0 auto 30px; line-height: 1.7; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .95rem; transition: all .3s; border: none; cursor: pointer; }
+        .btn-primary { background: var(--gold); color: var(--forest-dark); }
+        .btn-primary:hover { background: #d4b36a; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196,163,90,0.4); }
+
+        footer { background: var(--forest-dark); color: rgba(255,255,255,0.8); padding: 60px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: .85rem; line-height: 1.7; margin-top: 15px; opacity: .7; }
+        footer h4 { font-family: 'Nunito', sans-serif; color: var(--gold); margin-bottom: 18px; font-size: .95rem; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: .85rem; transition: color .3s; }
+        footer ul a:hover { color: var(--gold); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: .8rem; opacity: .6; max-width: 1200px; margin: 0 auto; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 70px; left: 0; width: 100%; background: var(--forest); flex-direction: column; padding: 20px 5%; gap: 15px; transform: translateY(-120%); transition: transform .3s; }
+            .nav-links.open { transform: translateY(0); }
+            .page-header h1 { font-size: 2rem; }
+            .service-block, .service-block.reverse { grid-template-columns: 1fr; direction: ltr; }
+            .passive-grid { grid-template-columns: 1fr; }
+            .service-features { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="index.html" class="logo">
+        <svg viewBox="0 0 40 40"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+        <span>ЕкоДом<small>GREEN BUILDING</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нас</a></li>
+        <li><a href="services.html" class="active">Услуги</a></li>
+        <li><a href="portfolio.html">Портфолио</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<section class="page-header">
+    <h1>Нашите зелени услуги</h1>
+    <p>Пълен спектър от решения за устойчиво строителство — от пасивни къщи до соларни системи и зелени покриви.</p>
+</section>
+
+<!-- Services -->
+<section class="section">
+    <div class="service-block fade-up">
+        <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" alt="Пасивни къщи">
+            <div class="rating-badge"><span class="grade">A+</span> Енергиен клас</div>
+        </div>
+        <div class="service-content">
+            <h3><span class="num">1</span> Ново строителство — пасивни къщи</h3>
+            <p>Проектираме и строим сертифицирани пасивни къщи, които консумират до 90% по-малко енергия за отопление в сравнение с конвенционалните сгради. Всяка наша нова сграда отговаря на най-високите международни стандарти.</p>
+            <p>Използваме висококачествена изолация, тройни стъклопакети, рекуператорни системи и интелигентно управление на микроклимата.</p>
+            <ul class="service-features">
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Еко материали</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Тройни стъклопакети</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Рекуператори</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Smart Home</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-block reverse fade-up">
+        <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800" alt="Зелени ремонти">
+            <div class="rating-badge"><span class="grade">B+</span> до <span class="grade">A+</span></div>
+        </div>
+        <div class="service-content">
+            <h3><span class="num">2</span> Зелени ремонти</h3>
+            <p>Превръщаме съществуващите жилища в енергийно ефективни домове чрез цялостни зелени ремонти. Подобряваме изолацията, подменяме дограмата и инсталираме съвременни отоплителни системи с минимален въглероден отпечатък.</p>
+            <p>Използваме изключително безопасни за здравето бои, лакове и покрития без летливи органични съединения (VOC-free).</p>
+            <ul class="service-features">
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> VOC-free покрития</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> LED осветление</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Термоизолация</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Водоспестяващи</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-block fade-up">
+        <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800" alt="Енергийна реконструкция">
+            <div class="rating-badge"><span class="grade">E</span> до <span class="grade">A</span></div>
+        </div>
+        <div class="service-content">
+            <h3><span class="num">3</span> Енергийни реконструкции</h3>
+            <p>Специализираме в дълбоки енергийни реконструкции на стари панелни блокове, административни сгради и промишлени обекти. Нашият подход включва пълен енергиен одит, проект и изпълнение.</p>
+            <p>Средно подобряваме енергийния клас с 3-4 степени и намаляваме разходите за отопление с до 65%.</p>
+            <ul class="service-features">
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Енергиен одит</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Фасадна изолация</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Нова дограма</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Термопомпи</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-block reverse fade-up">
+        <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800" alt="Еко интериорен дизайн">
+            <div class="rating-badge"><span class="grade">ECO</span> Материали</div>
+        </div>
+        <div class="service-content">
+            <h3><span class="num">4</span> Еко интериорен дизайн</h3>
+            <p>Създаваме здравословни и красиви интериори с натурални материали — дърво от устойчиви гори, рециклирани метали, органични тъкани и нетоксични покрития. Всеки елемент е избран с грижа за хората и планетата.</p>
+            <ul class="service-features">
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> FSC дървесина</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Рециклирани метали</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Органични тъкани</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Биофилен дизайн</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-block fade-up">
+        <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800" alt="Зелени покриви и соларни системи">
+            <div class="rating-badge"><span class="grade">SOLAR</span> + Green Roof</div>
+        </div>
+        <div class="service-content">
+            <h3><span class="num">5</span> Зелени покриви и соларни системи</h3>
+            <p>Монтираме зелени покриви с жива растителност, които подобряват изолацията, поглъщат CO2 и намаляват ефекта на топлинните острови. В комбинация със соларни панели постигаме почти нулева енергийна зависимост.</p>
+            <ul class="service-features">
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Зелен покрив</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Соларни панели</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Батерии за съхранение</li>
+                <li><svg viewBox="0 0 24 24"><path d="M20 2C15 8 6 14 6 24c0 3 1 4 3 4h5V14l6-6V2z"/></svg> Net metering</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Passive House Standards -->
+<section class="passive-section">
+    <div class="section-header fade-up" style="color:#fff">
+        <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+        <h2 style="color:#fff">Стандарти за пасивни къщи</h2>
+        <p style="color:rgba(255,255,255,0.7)">Всички наши проекти отговарят на строгите критерии на Passive House Institute.</p>
+    </div>
+    <div class="passive-grid">
+        <div class="passive-card fade-up">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <h3>Отопление</h3>
+            <p>Максимална потребност от енергия за отопление</p>
+            <div class="value">&le; 15 kWh/m2</div>
+        </div>
+        <div class="passive-card fade-up">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke-width="2"/></svg>
+            <h3>Херметичност</h3>
+            <p>Въздухопропускливост при 50 Pa разлика в налягането</p>
+            <div class="value">&le; 0.6 ACH</div>
+        </div>
+        <div class="passive-card fade-up">
+            <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+            <h3>Обща енергия</h3>
+            <p>Максимална обща първична енергийна потребност</p>
+            <div class="value">&le; 120 kWh/m2</div>
+        </div>
+    </div>
+</section>
+
+<!-- Energy Efficiency Ratings -->
+<section class="energy-section">
+    <div class="energy-content">
+        <div class="section-header fade-up" style="color:#fff; position:relative; z-index:1;">
+            <div class="leaf-divider"><span></span><svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z"/></svg><span></span></div>
+            <h2 style="color:#fff">Енергийни класове</h2>
+            <p style="color:rgba(255,255,255,0.8)">Нашите сгради постигат най-високите енергийни класове. Ето скалата за сравнение.</p>
+        </div>
+        <div class="energy-scale fade-up">
+            <div class="energy-bar highlight"><span class="label">A+</span><div class="bar" style="width:25%;background:linear-gradient(90deg,#1a8c2e,#22a838)">ЕкоДом стандарт</div><span class="desc">< 25 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">A</span><div class="bar" style="width:32%;background:#3cc44e">Много добър</div><span class="desc">25-50 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">B</span><div class="bar" style="width:42%;background:#8cc63e">Добър</div><span class="desc">51-100 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">C</span><div class="bar" style="width:52%;background:#ffc107">Среден</div><span class="desc">101-150 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">D</span><div class="bar" style="width:62%;background:#ff9800">Нисък</div><span class="desc">151-200 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">E</span><div class="bar" style="width:72%;background:#ff5722">Много нисък</div><span class="desc">201-300 kWh/m2/год</span></div>
+            <div class="energy-bar"><span class="label">F</span><div class="bar" style="width:85%;background:#d32f2f">Неефективен</div><span class="desc">> 300 kWh/m2/год</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="fade-up">
+        <h2>Планирате зелен проект?</h2>
+        <p>Свържете се с нас за безплатна консултация и оценка на потенциала за енергийни спестявания на вашия обект.</p>
+        <a href="contact.html" class="btn btn-primary">Заявете консултация</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 2C15 8 6 14 6 24c0 8 6 14 14 14s14-6 14-14C34 14 25 8 20 2z" fill="#C4A35A"/><path d="M20 12v22M14 20l6-6 6 6" stroke="#2D4A22" stroke-width="2" fill="none"/></svg>
+                <span>ЕкоДом</span>
+            </a>
+            <p>Водеща компания за устойчиво и зелено строителство в България от 2012 година.</p>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <ul><li><a href="index.html">Начало</a></li><li><a href="about.html">За нас</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="contact.html">Контакти</a></li></ul>
+        </div>
+        <div>
+            <h4>Услуги</h4>
+            <ul><li><a href="#">Пасивни къщи</a></li><li><a href="#">Зелени ремонти</a></li><li><a href="#">Соларни системи</a></li><li><a href="#">Зелени покриви</a></li></ul>
+        </div>
+        <div>
+            <h4>Контакти</h4>
+            <ul><li><a href="tel:+35928461122">+359 2 846 1122</a></li><li><a href="mailto:info@ekodom.bg">info@ekodom.bg</a></li><li><a href="#">ул. Шипка 34, 1504 София</a></li></ul>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 ЕкоДом ЕООД. Всички права запазени.</div>
+</footer>
+
+<script>
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

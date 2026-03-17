@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакти - АрхиПлан</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2C3E50;--white:#FFFFFF;--accent:#3498DB;--light:#ECF0F1;--dark:#1A252F}
+body{font-family:'Work Sans',sans-serif;color:var(--blue);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Saira',sans-serif;font-weight:700}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+nav{position:fixed;top:0;left:0;width:100%;background:rgba(44,62,80,.97);backdrop-filter:blur(8px);z-index:1000;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
+nav .logo{font-family:'Saira',sans-serif;font-size:1.6rem;color:var(--white);font-weight:700;letter-spacing:1px}
+nav .logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:30px}
+nav ul li a{color:rgba(255,255,255,.8);font-size:.95rem;font-weight:500;transition:color .3s;position:relative}
+nav ul li a:hover,nav ul li a.active{color:var(--accent)}
+nav ul li a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:26px;height:2px;background:var(--white);transition:.3s}
+
+.page-header{padding:140px 0 80px;background:var(--blue);text-align:center;color:var(--white);position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(52,152,219,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.08) 1px,transparent 1px);background-size:40px 40px}
+.page-header h1{font-size:2.8rem;position:relative;z-index:1}
+.page-header p{margin-top:12px;opacity:.7;font-size:1.05rem;position:relative;z-index:1}
+
+/* CONTACT SECTION */
+.contact-section{padding:100px 0;position:relative}
+.contact-section::before{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background-image:linear-gradient(rgba(52,152,219,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(52,152,219,.03) 1px,transparent 1px);background-size:25px 25px;pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:start}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid #e0e6ed;border-radius:8px;padding:45px;box-shadow:0 10px 40px rgba(44,62,80,.08)}
+.form-card h2{font-size:1.8rem;margin-bottom:8px}
+.form-card .subtitle{color:#7f8c8d;font-size:.95rem;margin-bottom:30px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;color:var(--blue)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1px solid #d5dce4;border-radius:4px;font-family:'Work Sans',sans-serif;font-size:.95rem;color:var(--blue);transition:border-color .3s;background:var(--white)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(52,152,219,.1)}
+.form-group textarea{resize:vertical;min-height:120px}
+
+/* RANGE SLIDER */
+.range-group{margin-bottom:18px}
+.range-group label{display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;color:var(--blue)}
+.range-display{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.range-value{font-family:'Saira',sans-serif;font-size:1.1rem;color:var(--accent);font-weight:600}
+.range-slider{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:linear-gradient(to right,var(--accent) 50%,#d5dce4 50%);outline:none;cursor:pointer}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--white);box-shadow:0 2px 6px rgba(0,0,0,.2);cursor:pointer}
+.range-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--white);box-shadow:0 2px 6px rgba(0,0,0,.2);cursor:pointer}
+
+.btn{display:inline-block;padding:14px 36px;border-radius:4px;font-family:'Saira',sans-serif;font-weight:600;font-size:1rem;transition:all .3s;cursor:pointer;border:none;width:100%}
+.btn-primary{background:var(--accent);color:var(--white)}
+.btn-primary:hover{background:#2980B9;transform:translateY(-2px);box-shadow:0 8px 25px rgba(52,152,219,.4)}
+
+/* CONTACT INFO */
+.contact-info{position:relative;z-index:1}
+.info-card{background:var(--blue);color:var(--white);border-radius:8px;padding:40px;margin-bottom:25px}
+.info-card h3{font-size:1.3rem;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.info-card h3 .icon{color:var(--accent);font-size:1.4rem}
+.info-item{display:flex;align-items:flex-start;gap:15px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.info-item:last-child{border-bottom:none}
+.info-item .icon{width:40px;height:40px;background:rgba(52,152,219,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;color:var(--accent)}
+.info-item .text p{font-size:.92rem;opacity:.85;line-height:1.6}
+.info-item .text strong{display:block;font-size:.95rem;opacity:1;margin-bottom:2px}
+
+.hours-card{background:var(--light);border-radius:8px;padding:35px;border:1px solid #e0e6ed}
+.hours-card h3{font-size:1.2rem;margin-bottom:18px;color:var(--blue)}
+.hours-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #d5dce4;font-size:.92rem}
+.hours-row:last-child{border-bottom:none}
+.hours-row .day{font-weight:500}
+.hours-row .time{color:var(--accent);font-weight:600}
+
+/* MAP */
+.map-section{padding:0;height:400px;position:relative}
+.map-section iframe{width:100%;height:100%;border:0;filter:saturate(0.8)}
+.map-overlay{position:absolute;top:20px;left:20px;background:var(--white);padding:20px 25px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:2}
+.map-overlay h4{font-size:1rem;margin-bottom:5px}
+.map-overlay p{font-size:.85rem;color:#7f8c8d}
+
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col h4{font-family:'Saira',sans-serif;color:var(--white);font-size:1.1rem;margin-bottom:18px}
+.footer-col p,.footer-col a{font-size:.9rem;line-height:1.9;display:block;color:rgba(255,255,255,.6);transition:color .3s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:25px;text-align:center;font-size:.85rem}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* SUCCESS MESSAGE */
+.success-msg{display:none;text-align:center;padding:40px;background:#d4edda;border:1px solid #c3e6cb;border-radius:8px;color:#155724}
+.success-msg h3{margin-bottom:10px}
+
+@media(max-width:968px){
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  nav ul{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--dark);flex-direction:column;padding:80px 40px;gap:25px;transition:right .3s}
+  nav ul.open{right:0}
+  .form-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .page-header h1{font-size:2rem}
+  .form-card{padding:30px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Архи<span>План</span></a>
+  <ul id="navMenu">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html">За нас</a></li>
+    <li><a href="services.html">Услуги</a></li>
+    <li><a href="portfolio.html">Портфолио</a></li>
+    <li><a href="contact.html" class="active">Контакти</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>Свържете се с нас</h1>
+  <p>Поискайте безплатна консултация и индивидуална оферта за вашия проект</p>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="form-card fade-up">
+        <h2>Поискай оферта</h2>
+        <p class="subtitle">Попълнете формуляра и ние ще се свържем с вас в рамките на 24 часа</p>
+
+        <form id="contactForm" onsubmit="return handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Име и фамилия *</label>
+              <input type="text" id="name" name="name" placeholder="Вашето име" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон *</label>
+              <input type="tel" id="phone" name="phone" placeholder="+359 ..." required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Имейл *</label>
+            <input type="email" id="email" name="email" placeholder="vashemail@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="type">Тип обект</label>
+            <select id="type" name="type">
+              <option value="" disabled selected>Изберете тип обект</option>
+              <option value="жилище">Жилище (къща/апартамент)</option>
+              <option value="офис">Офис/Търговски обект</option>
+              <option value="промишлено">Промишлен обект</option>
+              <option value="реконструкция">Реконструкция</option>
+              <option value="интериор">Интериорен дизайн</option>
+              <option value="друго">Друго</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Описание на проекта</label>
+            <textarea id="description" name="description" placeholder="Опишете накратко вашия проект - площ, местоположение, специфични изисквания..."></textarea>
+          </div>
+
+          <div class="range-group">
+            <label>Приблизителен бюджет</label>
+            <div class="range-display">
+              <span style="font-size:.85rem;color:#7f8c8d">10 000 лв.</span>
+              <span class="range-value" id="budgetValue">100 000 лв.</span>
+              <span style="font-size:.85rem;color:#7f8c8d">500 000+ лв.</span>
+            </div>
+            <input type="range" class="range-slider" id="budget" name="budget" min="10000" max="500000" step="10000" value="100000">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Изпрати запитване</button>
+        </form>
+
+        <div class="success-msg" id="successMsg">
+          <h3>Благодарим за запитването!</h3>
+          <p>Ще се свържем с вас в рамките на 24 часа. Ако въпросът е спешен, моля позвънете ни на +359 2 811 2233.</p>
+        </div>
+      </div>
+
+      <div class="contact-info">
+        <div class="info-card fade-up">
+          <h3><span class="icon">&#9742;</span> Контактна информация</h3>
+
+          <div class="info-item">
+            <div class="icon">&#9993;</div>
+            <div class="text">
+              <strong>Имейл</strong>
+              <p>info@archiplan.bg</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon">&#9742;</div>
+            <div class="text">
+              <strong>Телефон</strong>
+              <p>+359 2 811 2233</p>
+              <p>+359 88 765 4321</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon">&#9962;</div>
+            <div class="text">
+              <strong>Адрес</strong>
+              <p>ул. Алабин 50<br>1000 София, България</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hours-card fade-up">
+          <h3>Работно време</h3>
+          <div class="hours-row">
+            <span class="day">Понеделник - Петък</span>
+            <span class="time">08:00 - 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Събота</span>
+            <span class="time">09:00 - 14:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Неделя</span>
+            <span class="time">Почивен ден</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Спешни случаи</span>
+            <span class="time">24/7</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="map-section">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.665!2d23.322!3d42.694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDQxJzM4LjQiTiAyM8KwMTknMTkuMiJF!5e0!3m2!1sbg!2sbg!4v1" allowfullscreen loading="lazy"></iframe>
+  <div class="map-overlay">
+    <h4>АрхиПлан ЕООД</h4>
+    <p>ул. Алабин 50, 1000 София</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>АрхиПлан</h4>
+        <p>Проектиране и строителство с прецизност от 2010 година. Вашият надежден партньор за всеки строителен проект в България.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="index.html">Начало</a>
+        <a href="about.html">За нас</a>
+        <a href="services.html">Услуги</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="contact.html">Контакти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="services.html">Ново строителство</a>
+        <a href="services.html">Ремонти</a>
+        <a href="services.html">Реконструкции</a>
+        <a href="services.html">Интериорен дизайн</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <p>ул. Алабин 50, 1000 София</p>
+        <p>+359 2 811 2233</p>
+        <p>info@archiplan.bg</p>
+        <p>Пон-Пет: 08:00 - 18:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 АрхиПлан ЕООД. Всички права запазени.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Fade-up observer
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// Budget range slider
+const budgetSlider=document.getElementById('budget');
+const budgetValue=document.getElementById('budgetValue');
+budgetSlider.addEventListener('input',function(){
+  const val=parseInt(this.value);
+  const pct=((val-10000)/(500000-10000))*100;
+  this.style.background=`linear-gradient(to right,var(--accent) ${pct}%,#d5dce4 ${pct}%)`;
+  if(val>=500000){
+    budgetValue.textContent='500 000+ лв.';
+  }else{
+    budgetValue.textContent=val.toLocaleString('bg-BG')+' лв.';
+  }
+});
+
+// Form submission
+function handleSubmit(e){
+  e.preventDefault();
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('successMsg').style.display='block';
+  return false;
+}
+</script>
+</body>
+</html>

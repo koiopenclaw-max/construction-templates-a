@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги — ПрестижСтрой</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --dark: #1A1A2E; --gold: #B8860B; --cream: #E8E2D6; --dark-light: #24243e; }
+        body { font-family: 'Raleway', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; color: inherit; }
+        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(26,26,46,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(184,134,11,0.2); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 18px 30px; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
+        .logo span { color: var(--cream); font-weight: 300; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--cream); transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--gold); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 28px; height: 2px; background: var(--gold); transition: 0.3s; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; flex-direction: column; background: var(--dark); padding: 80px 40px; transition: right 0.4s; gap: 24px; }
+            .nav-links.open { right: 0; }
+        }
+        .gold-line { width: 60px; height: 2px; background: var(--gold); }
+        .hero-label { font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); }
+        .page-hero { padding: 160px 30px 80px; text-align: center; background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 50%, var(--dark) 100%); position: relative; }
+        .page-hero::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 60px; background: linear-gradient(transparent, var(--gold)); }
+        .page-hero h1 { font-size: 3rem; margin: 16px 0; }
+        .page-hero p { max-width: 600px; margin: 16px auto 0; font-size: 0.95rem; color: rgba(232,226,214,0.7); line-height: 1.7; }
+        .page-hero .gold-line { margin: 0 auto; }
+        /* SERVICES */
+        .services-container { max-width: 1200px; margin: 0 auto; padding: 100px 30px; }
+        .service-row { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 100px; }
+        .service-row:nth-child(even) { direction: rtl; }
+        .service-row:nth-child(even) > * { direction: ltr; }
+        .service-row:last-child { margin-bottom: 0; }
+        .service-img { position: relative; overflow: hidden; }
+        .service-img img { width: 100%; height: 380px; object-fit: cover; border: 1px solid rgba(184,134,11,0.15); transition: transform 0.6s; }
+        .service-img:hover img { transform: scale(1.04); }
+        .service-number { position: absolute; top: 20px; left: 20px; font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--gold); opacity: 0.25; line-height: 1; }
+        .service-content { padding: 20px 0; }
+        .service-content h2 { font-size: 2rem; margin-bottom: 16px; }
+        .service-content .gold-line { margin-bottom: 20px; }
+        .service-content p { font-size: 0.93rem; line-height: 1.9; color: rgba(232,226,214,0.75); margin-bottom: 12px; }
+        .service-features { list-style: none; margin-top: 20px; }
+        .service-features li { font-size: 0.88rem; color: rgba(232,226,214,0.7); padding: 8px 0; border-bottom: 1px solid rgba(184,134,11,0.08); padding-left: 20px; position: relative; }
+        .service-features li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+        @media (max-width: 768px) {
+            .service-row, .service-row:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+            .page-hero h1 { font-size: 2.2rem; }
+        }
+        /* GOLD DIVIDER */
+        .gold-divider { text-align: center; padding: 0 30px; }
+        .gold-divider-line { max-width: 1200px; margin: 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); position: relative; }
+        .gold-divider-line::before { content: '&#9670;'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--dark); padding: 0 16px; color: var(--gold); font-size: 0.7rem; }
+        /* PROCESS */
+        .process-section { background: var(--dark-light); padding: 100px 30px; }
+        .process-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+        .process-inner h2 { font-size: 2.2rem; margin-bottom: 16px; }
+        .process-inner > .gold-line { margin: 0 auto 60px; }
+        .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .process-step { position: relative; padding: 30px 20px; }
+        .process-step::after { content: ''; position: absolute; top: 40px; right: -15px; width: 30px; height: 1px; background: var(--gold); }
+        .process-step:last-child::after { display: none; }
+        .step-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); opacity: 0.4; margin-bottom: 16px; }
+        .process-step h4 { font-size: 1rem; margin-bottom: 10px; }
+        .process-step p { font-size: 0.82rem; line-height: 1.7; color: rgba(232,226,214,0.6); }
+        @media (max-width: 768px) { .process-steps { grid-template-columns: 1fr 1fr; } .process-step::after { display: none; } }
+        /* CTA */
+        .cta-section { padding: 100px 30px; text-align: center; }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 16px; }
+        .cta-section p { color: rgba(232,226,214,0.7); margin-bottom: 30px; font-size: 0.95rem; }
+        .cta-section .gold-line { margin: 0 auto 30px; }
+        .btn-gold { display: inline-block; padding: 16px 44px; border: 1px solid var(--gold); color: var(--gold); font-family: 'Raleway', sans-serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; transition: all 0.4s; }
+        .btn-gold:hover { background: var(--gold); color: var(--dark); }
+        /* FOOTER */
+        footer { background: #111125; border-top: 1px solid rgba(184,134,11,0.15); padding: 60px 30px 30px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .footer-col h4 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-col p, .footer-col a { font-size: 0.85rem; color: rgba(232,226,214,0.6); line-height: 2; display: block; }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(184,134,11,0.1); font-size: 0.8rem; color: rgba(232,226,214,0.4); }
+        @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">Престиж<span>Строй</span></a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За нас</a></li>
+                <li><a href="services.html" class="active">Услуги</a></li>
+                <li><a href="portfolio.html">Портфолио</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <p class="hero-label">Какво предлагаме</p>
+        <h1>Нашите услуги</h1>
+        <div class="gold-line"></div>
+        <p>Предлагаме пълен спектър от строителни и дизайнерски услуги, изпълнени с безкомпромисно внимание към всеки детайл.</p>
+    </section>
+
+    <div class="services-container">
+        <!-- Service 1 -->
+        <div class="service-row fade-up">
+            <div class="service-img">
+                <div class="service-number">01</div>
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600" alt="Ново строителство">
+            </div>
+            <div class="service-content">
+                <h2>Ново строителство</h2>
+                <div class="gold-line"></div>
+                <p>Проектираме и изграждаме луксозни вили, резиденции и ексклузивни жилищни комплекси от нулата. Всеки проект е уникален и съобразен с индивидуалния стил на живот на нашите клиенти.</p>
+                <p>Използваме иновативни строителни технологии и премиум материали от водещи европейски производители.</p>
+                <ul class="service-features">
+                    <li>Луксозни вили и резиденции</li>
+                    <li>Ексклузивни жилищни комплекси</li>
+                    <li>Енергийно ефективно строителство</li>
+                    <li>Интелигентни системи за дома</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+        <!-- Service 2 -->
+        <div class="service-row fade-up" style="margin-top:100px;">
+            <div class="service-img">
+                <div class="service-number">02</div>
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Луксозни ремонти">
+            </div>
+            <div class="service-content">
+                <h2>Луксозни ремонти</h2>
+                <div class="gold-line"></div>
+                <p>Трансформираме съществуващи пространства в модерни, елегантни и функционални среди. Нашите high-end ремонти обхващат всичко — от концептуалния дизайн до финалните довършителни работи.</p>
+                <p>Работим с внимание към наследството на сградата, съчетавайки модерния лукс с автентичния характер.</p>
+                <ul class="service-features">
+                    <li>Цялостни ремонти на жилища</li>
+                    <li>Премиум довършителни работи</li>
+                    <li>Реставрация на исторически елементи</li>
+                    <li>Модернизация на инсталации</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+        <!-- Service 3 -->
+        <div class="service-row fade-up" style="margin-top:100px;">
+            <div class="service-img">
+                <div class="service-number">03</div>
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600" alt="Реконструкции">
+            </div>
+            <div class="service-content">
+                <h2>Реконструкции</h2>
+                <div class="gold-line"></div>
+                <p>Възстановяваме и преобразяваме сгради с историческа или архитектурна стойност. Нашият подход съчетава уважение към оригиналния замисъл с модерни конструктивни решения.</p>
+                <p>Извършваме пълен конструктивен анализ и изготвяме индивидуален план за реконструкция.</p>
+                <ul class="service-features">
+                    <li>Конструктивно укрепване</li>
+                    <li>Преустройство на сгради</li>
+                    <li>Реставрация на фасади</li>
+                    <li>Сеизмична устойчивост</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+        <!-- Service 4 -->
+        <div class="service-row fade-up" style="margin-top:100px;">
+            <div class="service-img">
+                <div class="service-number">04</div>
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600" alt="Интериорен дизайн">
+            </div>
+            <div class="service-content">
+                <h2>Интериорен дизайн</h2>
+                <div class="gold-line"></div>
+                <p>Нашият екип от интериорни дизайнери създава пространства, които излъчват елегантност и комфорт. Работим с ексклузивни марки мебели, осветление и текстил.</p>
+                <p>Всеки интериорен проект е цялостна визия — от цветовата палитра до последния аксесоар.</p>
+                <ul class="service-features">
+                    <li>3D визуализация на интериора</li>
+                    <li>Подбор на мебели и осветление</li>
+                    <li>Персонализирани мебели по поръчка</li>
+                    <li>Обзавеждане под ключ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+        <!-- Service 5 -->
+        <div class="service-row fade-up" style="margin-top:100px;">
+            <div class="service-img">
+                <div class="service-number">05</div>
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600" alt="Покриви">
+            </div>
+            <div class="service-content">
+                <h2>Покривни системи</h2>
+                <div class="gold-line"></div>
+                <p>Проектираме и изграждаме покривни конструкции, които съчетават естетика с функционалност. Работим с висококачествени материали, осигуряващи дълготрайна защита и стил.</p>
+                <p>Предлагаме решения за плоски и скатни покриви, включително зелени покриви и покривни тераси.</p>
+                <ul class="service-features">
+                    <li>Нови покривни конструкции</li>
+                    <li>Хидроизолация и топлоизолация</li>
+                    <li>Зелени покриви и тераси</li>
+                    <li>Покривни прозорци и мансарди</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <section class="process-section">
+        <div class="process-inner">
+            <p class="hero-label" style="margin-bottom:12px;">Как работим</p>
+            <h2>Нашият процес</h2>
+            <div class="gold-line"></div>
+            <div class="process-steps">
+                <div class="process-step fade-up">
+                    <div class="step-num">01</div>
+                    <h4>Консултация</h4>
+                    <p>Обсъждаме вашата визия, бюджет и срокове. Анализираме обекта и предлагаме решения.</p>
+                </div>
+                <div class="process-step fade-up">
+                    <div class="step-num">02</div>
+                    <h4>Проектиране</h4>
+                    <p>Създаваме детайлен архитектурен проект с 3D визуализации и подбор на материали.</p>
+                </div>
+                <div class="process-step fade-up">
+                    <div class="step-num">03</div>
+                    <h4>Изпълнение</h4>
+                    <p>Строим с прецизност и внимание. Редовни доклади и пълна прозрачност на процеса.</p>
+                </div>
+                <div class="process-step fade-up">
+                    <div class="step-num">04</div>
+                    <h4>Предаване</h4>
+                    <p>Финален одит и тестове. Предаваме обекта с пълна документация и гаранция.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section fade-up">
+        <p class="hero-label" style="margin-bottom:12px;">Готови ли сте?</p>
+        <h2>Започнете вашия проект</h2>
+        <div class="gold-line"></div>
+        <p>Свържете се с нас за безплатна консултация и индивидуална оферта.</p>
+        <a href="contact.html" class="btn-gold">Свържете се с нас</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>ПрестижСтрой</h4>
+                <p>Ексклузивно строителство и интериорен дизайн от 2005 година. Превръщаме архитектурните мечти в реалност с безкомпромисно качество.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a>
+                <a href="about.html">За нас</a>
+                <a href="services.html">Услуги</a>
+                <a href="portfolio.html">Портфолио</a>
+                <a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>бул. Витоша 89, 1000 София</p>
+                <p>+359 2 944 8800</p>
+                <a href="mailto:office@prestizhstroy.bg">office@prestizhstroy.bg</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 ПрестижСтрой. Всички права запазени.
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
